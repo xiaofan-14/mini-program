@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>校园跑腿 - 让生活更便捷</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .glass {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-strong {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .shadow-glow {
+            box-shadow: 0 8px 32px rgba(102, 126, 234, 0.3);
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .task-card {
+            transition: all 0.3s ease;
+        }
+        
+        .task-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="max-w-md mx-auto min-h-screen pb-20">
+        
+        <!-- 首页 -->
+        <div id="home" class="page active p-4">
+            <!-- 头部 -->
+            <div class="glass rounded-3xl p-6 mb-6 shadow-glow">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center floating">
+                            <span class="text-2xl">🎯</span>
+                        </div>
+                        <div>
+                            <h1 class="text-white text-xl font-bold">校园跑腿</h1>
+                            <p class="text-white text-opacity-80 text-sm">让生活更便捷</p>
+                        </div>
+                    </div>
+                    <button onclick="showPage('profile')" class="w-10 h-10 rounded-full bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl">👤</span>
+                    </button>
+                </div>
+                
+                <!-- 搜索框 -->
+                <div class="relative">
+                    <input type="text" placeholder="搜索任务..." 
+                           class="w-full bg-white bg-opacity-20 text-white placeholder-white placeholder-opacity-60 rounded-2xl px-4 py-3 pl-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-opacity-50">
+                    <span class="absolute left-4 top-3.5 text-xl">🔍</span>
+                </div>
+            </div>
+            
+            <!-- 快速入口 -->
+            <div class="glass-strong rounded-3xl p-6 mb-6 shadow-lg">
+                <h2 class="gradient-text text-lg font-bold mb-4">快速发布</h2>
+                <div class="grid grid-cols-4 gap-4">
+                    <button onclick="showPublish('快递代取')" class="flex flex-col items-center space-y-2 p-3 rounded-2xl hover:bg-purple-50 transition">
+                        <div class="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center text-2xl">📦</div>
+                        <span class="text-xs text-gray-700">代取快递</span>
+                    </button>
+                    <button onclick="showPublish('代买饭')" class="flex flex-col items-center space-y-2 p-3 rounded-2xl hover:bg-purple-50 transition">
+                        <div class="w-12 h-12 bg-gradient-to-br from-orange-400 to-red-400 rounded-xl flex items-center justify-center text-2xl">🍱</div>
+                        <span class="text-xs text-gray-700">代买饭</span>
+                    </button>
+                    <button onclick="showPublish('代打印')" class="flex flex-col items-center space-y-2 p-3 rounded-2xl hover:bg-purple-50 transition">
+                        <div class="w-12 h-12 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-xl flex items-center justify-center text-2xl">🖨️</div>
+                        <span class="text-xs text-gray-700">代打印</span>
+                    </button>
+                    <button onclick="showPublish('其他')" class="flex flex-col items-center space-y-2 p-3 rounded-2xl hover:bg-purple-50 transition">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-400 to-teal-400 rounded-xl flex items-center justify-center text-2xl">✨</div>
+                        <span class="text-xs text-gray-700">其他</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 热门任务 -->
+            <div class="glass-strong rounded-3xl p-6 shadow-lg">
+                <div class="flex items-center justify-between mb-4">
+                    <h2 class="gradient-text text-lg font-bold">热门任务</h2>
+                    <button onclick="showPage('taskList')" class="text-purple-600 text-sm font-medium">查看全部 →</button>
+                </div>
+                
+                <div class="space-y-3">
+                    <!-- 任务卡片 1 -->
+                    <div class="task-card bg-white rounded-2xl p-4 border border-gray-100" onclick="showTaskDetail(1)">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <span class="px-2 py-1 bg-purple-100 text-purple-600 text-xs rounded-lg font-medium">快递代取</span>
+                                    <span class="text-xs text-gray-400">5分钟前</span>
+                                </div>
+                                <h3 class="font-bold text-gray-800 mb-1">帮忙取个快递</h3>
+                                <p class="text-sm text-gray-500">菜鸟驿站,取件码: 123456</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-purple-600">¥5</div>
+                                <div class="text-xs text-gray-400">报酬</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                            <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                <span>📍</span>
+                                <span>东门菜鸟驿站</span>
+                            </div>
+                            <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                <span>⏰</span>
+                                <span>18:00前</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 任务卡片 2 -->
+                    <div class="task-card bg-white rounded-2xl p-4 border border-gray-100" onclick="showTaskDetail(2)">
+                        <div class="flex items-start justify-between mb-2">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-2 mb-1">
+                                    <span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-lg font-medium">代买饭</span>
+                                    <span class="text-xs text-gray-400">10分钟前</span>
+                                </div>
+                                <h3 class="font-bold text-gray-800 mb-1">食堂帮带份饭</h3>
+                                <p class="text-sm text-gray-500">二食堂黄焖鸡米饭,微辣</p>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-orange-600">¥8</div>
+                                <div class="text-xs text-gray-400">报酬</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-2 border-t border-gray-100">
+                            <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                <span>📍</span>
+                                <span>二食堂</span>
+                            </div>
+                            <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                <span>⏰</span>
+                                <span>12:30前</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 发布任务页 -->
+        <div id="publish" class="page p-4">
+            <div class="glass-strong rounded-3xl p-6 shadow-lg">
+                <div class="flex items-center justify-between mb-6">
+                    <button onclick="showPage('home')" class="w-10 h-10 rounded-xl bg-gray-100 flex items-center justify-center">
+                        <span class="text-xl">←</span>
+                    </button>
+                    <h2 class="gradient-text text-xl font-bold">发布任务</h2>
+                    <div class="w-10"></div>
+                </div>
+                
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">任务类型</label>
+                        <select id="taskType" class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                            <option>快递代取</option>
+                            <option>代买饭</option>
+                            <option>代打印</option>
+                            <option>代打卡</option>
+                            <option>其他</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">任务标题</label>
+                        <input type="text" placeholder="简单描述你的任务" 
+                               class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">详细描述</label>
+                        <textarea rows="4" placeholder="详细说明任务内容和要求" 
+                                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">任务地点</label>
+                            <input type="text" placeholder="例: 东门菜鸟驿站" 
+                                   class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-2">截止时间</label>
+                            <input type="time" value="18:00"
+                                   class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-2">悬赏金额 (元)</label>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xl">💰</span>
+                            <input type="number" value="5" min="1" step="1"
+                                   class="flex-1 px-4 py-3 rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-500">
+                        </div>
+                    </div>
+                    
+                    <button type="button" onclick="submitTask()" 
+                            class="btn-primary w-full py-4 rounded-xl text-white font-bold text-lg shadow-lg">
+                        立即发布
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- 任务大厅 -->
+        <div id="taskList" class="page p-4">
+            <div class="glass rounded-3xl p-6 mb-4 shadow-glow">
+                <div class="flex items-center justify-between mb-4">
+                    <button onclick="showPage('home')" class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl text-white">←</span>
+                    </button>
+                    <h2 class="text-white text-xl font-bold">任务大厅</h2>
+                    <button class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl">🔍</span>
+                    </button>
+                </div>
+                
+                <!-- 筛选标签 -->
+                <div class="flex space-x-2 overflow-x-auto pb-2">
+                    <button class="px-4 py-2 bg-white text-purple-600 rounded-xl text-sm font-medium whitespace-nowrap">全部</button>
+                    <button class="px-4 py-2 bg-white bg-opacity-20 text-white rounded-xl text-sm font-medium whitespace-nowrap">快递代取</button>
+                    <button class="px-4 py-2 bg-white bg-opacity-20 text-white rounded-xl text-sm font-medium whitespace-nowrap">代买饭</button>
+                    <button class="px-4 py-2 bg-white bg-opacity-20 text-white rounded-xl text-sm font-medium whitespace-nowrap">代打印</button>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <!-- 重复任务卡片 -->
+                <div class="glass-strong task-card rounded-2xl p-4 shadow-lg" onclick="showTaskDetail(1)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-xl">👤</div>
+                            <div>
+                                <div class="font-bold text-gray-800">张三</div>
+                                <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                    <span>⭐</span>
+                                    <span>4.8</span>
+                                    <span class="mx-1">|</span>
+                                    <span>完成32单</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-purple-600">¥5</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="px-2 py-1 bg-purple-100 text-purple-600 text-xs rounded-lg font-medium">快递代取</span>
+                            <span class="text-xs text-gray-400">5分钟前</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">帮忙取个快递</h3>
+                        <p class="text-sm text-gray-500">菜鸟驿站,取件码: 123456,不重,谢谢!</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div class="flex items-center space-x-1 text-xs text-gray-500">
+                            <span>📍</span>
+                            <span>东门菜鸟驿站 → 7号楼</span>
+                        </div>
+                        <div class="flex items-center space-x-1 text-xs text-gray-500">
+                            <span>⏰</span>
+                            <span>18:00前</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="glass-strong task-card rounded-2xl p-4 shadow-lg" onclick="showTaskDetail(2)">
+                    <div class="flex items-start justify-between mb-3">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-400 to-red-400 flex items-center justify-center text-xl">👤</div>
+                            <div>
+                                <div class="font-bold text-gray-800">李四</div>
+                                <div class="flex items-center space-x-1 text-xs text-gray-500">
+                                    <span>⭐</span>
+                                    <span>5.0</span>
+                                    <span class="mx-1">|</span>
+                                    <span>完成18单</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-2xl font-bold text-orange-600">¥8</div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <div class="flex items-center space-x-2 mb-2">
+                            <span class="px-2 py-1 bg-orange-100 text-orange-600 text-xs rounded-lg font-medium">代买饭</span>
+                            <span class="text-xs text-gray-400">10分钟前</span>
+                        </div>
+                        <h3 class="font-bold text-gray-800 mb-1">食堂帮带份饭</h3>
+                        <p class="text-sm text-gray-500">二食堂黄焖鸡米饭,微辣,不要香菜</p>
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div class="flex items-center space-x-1 text-xs text-gray-500">
+                            <span>📍</span>
+                            <span>二食堂 → 图书馆</span>
+                        </div>
+                        <div class="flex items-center space-x-1 text-xs text-gray-500">
+                            <span>⏰</span>
+                            <span>12:30前</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 我的任务 -->
+        <div id="myTasks" class="page p-4">
+            <div class="glass rounded-3xl p-6 mb-4 shadow-glow">
+                <div class="flex items-center justify-between mb-4">
+                    <button onclick="showPage('home')" class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl text-white">←</span>
+                    </button>
+                    <h2 class="text-white text-xl font-bold">我的任务</h2>
+                    <div class="w-10"></div>
+                </div>
+                
+                <!-- Tab 切换 -->
+                <div class="flex space-x-2">
+                    <button onclick="switchTab('published')" id="tab-published" class="flex-1 py-2 bg-white text-purple-600 rounded-xl text-sm font-medium">我发布的</button>
+                    <button onclick="switchTab('received')" id="tab-received" class="flex-1 py-2 bg-white bg-opacity-20 text-white rounded-xl text-sm font-medium">我接的</button>
+                </div>
+            </div>
+            
+            <!-- 我发布的任务列表 -->
+            <div id="published-tasks" class="space-y-3">
+                <div class="glass-strong rounded-2xl p-4 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-3 py-1 bg-green-100 text-green-600 text-xs rounded-lg font-medium">进行中</span>
+                        <span class="text-xs text-gray-400">今天 14:20</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">帮忙取个快递</h3>
+                    <p class="text-sm text-gray-500 mb-3">菜鸟驿站,取件码: 123456</p>
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div class="flex items-center space-x-2">
+                            <div class="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-cyan-400 flex items-center justify-center text-sm">王</div>
+                            <div>
+                                <div class="text-sm font-medium text-gray-800">王五</div>
+                                <div class="text-xs text-gray-400">已接单</div>
+                            </div>
+                        </div>
+                        <button class="px-4 py-2 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl text-sm font-medium">确认完成</button>
+                    </div>
+                </div>
+                
+                <div class="glass-strong rounded-2xl p-4 shadow-lg opacity-60">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-3 py-1 bg-gray-100 text-gray-600 text-xs rounded-lg font-medium">已完成</span>
+                        <span class="text-xs text-gray-400">昨天 16:30</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">代买饭</h3>
+                    <p class="text-sm text-gray-500 mb-3">二食堂黄焖鸡米饭</p>
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div class="text-sm text-gray-500">已完成并评价</div>
+                        <div class="flex items-center space-x-1">
+                            <span class="text-yellow-400">⭐⭐⭐⭐⭐</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 我接的任务列表(默认隐藏) -->
+            <div id="received-tasks" class="space-y-3" style="display:none;">
+                <div class="glass-strong rounded-2xl p-4 shadow-lg">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-600 text-xs rounded-lg font-medium">进行中</span>
+                        <span class="text-xs text-gray-400">今天 15:00</span>
+                    </div>
+                    <h3 class="font-bold text-gray-800 mb-2">代打印文件</h3>
+                    <p class="text-sm text-gray-500 mb-3">图书馆一楼打印店,10页</p>
+                    <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                        <div class="text-sm text-purple-600 font-medium">报酬: ¥3</div>
+                        <button class="px-4 py-2 bg-gradient-to-r from-green-500 to-teal-500 text-white rounded-xl text-sm font-medium">标记完成</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 个人中心 -->
+        <div id="profile" class="page p-4">
+            <div class="glass rounded-3xl p-6 mb-4 shadow-glow">
+                <div class="flex items-center justify-between mb-6">
+                    <button onclick="showPage('home')" class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl text-white">←</span>
+                    </button>
+                    <h2 class="text-white text-xl font-bold">个人中心</h2>
+                    <button class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl">⚙️</span>
+                    </button>
+                </div>
+                
+                <!-- 用户信息卡片 -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-4xl floating">👨‍🎓</div>
+                    <div class="flex-1">
+                        <h3 class="text-white text-xl font-bold mb-1">张三</h3>
+                        <p class="text-white text-opacity-80 text-sm mb-2">学号: 20230101</p>
+                        <div class="flex items-center space-x-4">
+                            <div class="flex items-center space-x-1">
+                                <span class="text-yellow-400">⭐</span>
+                                <span class="text-white font-medium">4.9</span>
+                            </div>
+                            <div class="text-white text-opacity-80 text-sm">信用分: 98</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 数据统计 -->
+            <div class="grid grid-cols-3 gap-3 mb-4">
+                <div class="glass-strong rounded-2xl p-4 text-center">
+                    <div class="text-2xl font-bold gradient-text mb-1">12</div>
+                    <div class="text-xs text-gray-500">发布任务</div>
+                </div>
+                <div class="glass-strong rounded-2xl p-4 text-center">
+                    <div class="text-2xl font-bold gradient-text mb-1">25</div>
+                    <div class="text-xs text-gray-500">接单完成</div>
+                </div>
+                <div class="glass-strong rounded-2xl p-4 text-center">
+                    <div class="text-2xl font-bold gradient-text mb-1">186</div>
+                    <div class="text-xs text-gray-500">积分余额</div>
+                </div>
+            </div>
+            
+            <!-- 功能菜单 -->
+            <div class="glass-strong rounded-2xl p-4 mb-4">
+                <div class="space-y-1">
+                    <button class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-purple-50 transition">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">💳</span>
+                            <span class="text-gray-800 font-medium">我的钱包</span>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </button>
+                    <button class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-purple-50 transition">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">⭐</span>
+                            <span class="text-gray-800 font-medium">我的评价</span>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </button>
+                    <button class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-purple-50 transition">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">📱</span>
+                            <span class="text-gray-800 font-medium">联系方式</span>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </button>
+                    <button class="w-full flex items-center justify-between p-4 rounded-xl hover:bg-purple-50 transition">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-2xl">❓</span>
+                            <span class="text-gray-800 font-medium">帮助与反馈</span>
+                        </div>
+                        <span class="text-gray-400">→</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 退出登录 -->
+            <button class="w-full btn-primary py-4 rounded-xl text-white font-bold shadow-lg">
+                退出登录
+            </button>
+        </div>
+        
+        <!-- 任务详情页 -->
+        <div id="taskDetail" class="page p-4">
+            <div class="glass rounded-3xl p-6 mb-4 shadow-glow">
+                <div class="flex items-center justify-between">
+                    <button onclick="goBack()" class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl text-white">←</span>
+                    </button>
+                    <h2 class="text-white text-xl font-bold">任务详情</h2>
+                    <button class="w-10 h-10 rounded-xl bg-white bg-opacity-20 flex items-center justify-center">
+                        <span class="text-xl">⋯</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="glass-strong rounded-3xl p-6 mb-4 shadow-lg">
+                <!-- 发布者信息 -->
+                <div class="flex items-center justify-between mb-6 pb-6 border-b border-gray-100">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-400 to-pink-400 flex items-center justify-center text-2xl">👤</div>
+                        <div>
+                            <div class="font-bold text-gray-800 text-lg">张三</div>
+                            <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                <span>⭐ 4.8</span>
+                                <span>|</span>
+                                <span>完成32单</span>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="w-12 h-12 rounded-xl bg-purple-100 flex items-center justify-center">
+                        <span class="text-2xl">💬</span>
+                    </button>
+                </div>
+                
+                <!-- 任务信息 -->
+                <div class="mb-6">
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="px-3 py-1 bg-purple-100 text-purple-600 text-sm rounded-lg font-medium">快递代取</span>
+                        <span class="text-sm text-gray-400">5分钟前发布</span>
+                    </div>
+                    <h3 class="text-2xl font-bold text-gray-800 mb-3">帮忙取个快递</h3>
+                    <p class="text-gray-600 leading-relaxed mb-4">
+                        菜鸟驿站有个快递需要取,取件码是123456。不是很重,麻烦帮忙送到7号楼宿舍楼下就可以,非常感谢!
+                    </p>
+                    
+                    <!-- 任务详情卡片 -->
+                    <div class="grid grid-cols-2 gap-3 mb-4">
+                        <div class="bg-purple-50 rounded-xl p-3">
+                            <div class="text-xs text-gray-500 mb-1">取件地点</div>
+                            <div class="text-sm font-medium text-gray-800">📍 东门菜鸟驿站</div>
+                        </div>
+                        <div class="bg-purple-50 rounded-xl p-3">
+                            <div class="text-xs text-gray-500 mb-1">送达地点</div>
+                            <div class="text-sm font-medium text-gray-800">📍 7号楼宿舍</div>
+                        </div>
+                        <div class="bg-orange-50 rounded-xl p-3">
+                            <div class="text-xs text-gray-500 mb-1">截止时间</div>
+                            <div class="text-sm font-medium text-gray-800">⏰ 今天 18:00</div>
+                        </div>
+                        <div class="bg-green-50 rounded-xl p-3">
+                            <div class="text-xs text-gray-500 mb-1">任务报酬</div>
+                            <div class="text-lg font-bold text-green-600">¥5</div>
+                        </div>
+                    </div>
+                    
+                    <!-- 距离和时间 -->
+                    <div class="flex items-center justify-between p-4 bg-gray-50 rounded-xl">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xl">🚶</span>
+                            <div>
+                                <div class="text-xs text-gray-500">预计距离</div>
+                                <div class="text-sm font-medium text-gray-800">约500米</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-2xl">⏱️</span>
+                            <div>
+                                <div class="text-xs text-gray-500">预计耗时</div>
+                                <div class="text-sm font-medium text-gray-800">15分钟</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 温馨提示 -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-xl p-4 mb-6">
+                    <div class="flex items-start space-x-2">
+                        <span class="text-xl">💡</span>
+                        <div class="flex-1">
+                            <div class="text-sm font-medium text-yellow-800 mb-1">温馨提示</div>
+                            <div class="text-xs text-yellow-700 leading-relaxed">
+                                接单前请确认自己有时间完成任务,接单后请及时与发布者联系确认详细信息。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 底部按钮 -->
+                <div class="flex space-x-3">
+                    <button class="flex-1 py-4 border-2 border-purple-500 text-purple-600 rounded-xl font-bold hover:bg-purple-50 transition">
+                        收藏任务
+                    </button>
+                    <button onclick="acceptTask()" class="flex-1 btn-primary py-4 rounded-xl text-white font-bold shadow-lg">
+                        立即接单
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航栏 -->
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto">
+            <div class="glass-strong rounded-t-3xl px-6 py-4 shadow-2xl">
+                <div class="flex items-center justify-around">
+                    <button onclick="showPage('home')" class="nav-item flex flex-col items-center space-y-1 active">
+                        <span class="text-2xl">🏠</span>
+                        <span class="text-xs font-medium">首页</span>
+                    </button>
+                    <button onclick="showPage('taskList')" class="nav-item flex flex-col items-center space-y-1">
+                        <span class="text-2xl">📋</span>
+                        <span class="text-xs font-medium">大厅</span>
+                    </button>
+                    <button onclick="showPage('publish')" class="relative -top-6">
+                        <div class="w-16 h-16 btn-primary rounded-2xl flex items-center justify-center shadow-2xl floating">
+                            <span class="text-3xl">➕</span>
+                        </div>
+                    </button>
+                    <button onclick="showPage('myTasks')" class="nav-item flex flex-col items-center space-y-1">
+                        <span class="text-2xl">📝</span>
+                        <span class="text-xs font-medium">任务</span>
+                    </button>
+                    <button onclick="showPage('profile')" class="nav-item flex flex-col items-center space-y-1">
+                        <span class="text-2xl">👤</span>
+                        <span class="text-xs font-medium">我的</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </div>
+    
+    <script>
+        let currentPage = 'home';
+        let previousPage = 'home';
+        
+        function showPage(pageId) {
+            previousPage = currentPage;
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            currentPage = pageId;
+            
+            // 更新导航栏激活状态
+            const navItems = document.querySelectorAll('.nav-item');
+            navItems.forEach(item => {
+                item.classList.remove('text-purple-600');
+                item.classList.add('text-gray-500');
+            });
+            
+            window.scrollTo(0, 0);
+        }
+        
+        function showPublish(type) {
+            showPage('publish');
+            document.getElementById('taskType').value = type;
+        }
+        
+        function showTaskDetail(taskId) {
+            previousPage = currentPage;
+            showPage('taskDetail');
+        }
+        
+        function goBack() {
+            showPage(previousPage);
+        }
+        
+        function switchTab(tab) {
+            const publishedTab = document.getElementById('tab-published');
+            const receivedTab = document.getElementById('tab-received');
+            const publishedTasks = document.getElementById('published-tasks');
+            const receivedTasks = document.getElementById('received-tasks');
+            
+            if (tab === 'published') {
+                publishedTab.classList.add('bg-white', 'text-purple-600');
+                publishedTab.classList.remove('bg-white', 'bg-opacity-20', 'text-white');
+                receivedTab.classList.remove('bg-white', 'text-purple-600');
+                receivedTab.classList.add('bg-white', 'bg-opacity-20', 'text-white');
+                publishedTasks.style.display = 'block';
+                receivedTasks.style.display = 'none';
+            } else {
+                receivedTab.classList.add('bg-white', 'text-purple-600');
+                receivedTab.classList.remove('bg-white', 'bg-opacity-20', 'text-white');
+                publishedTab.classList.remove('bg-white', 'text-purple-600');
+                publishedTab.classList.add('bg-white', 'bg-opacity-20', 'text-white');
+                receivedTasks.style.display = 'block';
+                publishedTasks.style.display = 'none';
+            }
+        }
+        
+        function submitTask() {
+            alert('✅ 任务发布成功!\n\n您的任务已发布到任务大厅,等待其他同学接单。');
+            showPage('home');
+        }
+        
+        function acceptTask() {
+            if (confirm('确认接单?\n\n接单后请按时完成任务,保持良好的信用记录。')) {
+                alert('🎉 接单成功!\n\n请及时联系发布者确认详细信息。');
+                showPage('myTasks');
+            }
+        }
+    </script>
+</body>
+</html>
