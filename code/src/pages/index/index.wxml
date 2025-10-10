@@ -1,0 +1,13 @@
+<!--index.wxml-->
+<scroll-view class="scrollarea" scroll-y type="list">
+  <view>
+    <view class="flex flex-col">
+    <view>
+    123
+    </view>
+    <view>
+    123
+    </view>
+    </view>
+  </view>
+</scroll-view>
