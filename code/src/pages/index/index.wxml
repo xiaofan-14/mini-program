@@ -1,13 +1,40 @@
-<!--index.wxml-->
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view>
-    <view class="flex flex-col">
-    <view>
-    123
+<custom-nav title="校园跑腿"></custom-nav>
+
+<view class="page-container" style="padding-top: {{navHeight + 10}}px;">
+  <view class="page-bg"></view>
+  <scroll-view scroll-y class="scroll-content" style="padding-top: {{navHeight + 20}}px;">
+    <!-- 页面容器 -->
+    <view class="p-4">
+      <!-- 头部 -->
+      <view class="glass-card relative overflow-hidden rounded-2xl px-6 py-4 mb-6">
+        <view class="glass-layer absolute inset-0 pointer-events-none"></view>
+        <view class="glass-inner-shadow absolute inset-0 pointer-events-none"></view>
+        <!-- 主体内容 -->
+        <view bindtap="goToForm">
+          <view>
+            <text class="text-2xl font-bold text-[#00d3ab]">跑腿</text>
+          </view>
+          <view class="w-full p-4 mt-4 flex flex-col gap-8">
+            <view class="flex items-center space-x-2 gap-2">
+              <image src="/assets/pickup.png" class="w-6 h-6" />
+              <text class="text-xl text-black">从哪里取</text>
+            </view>
+
+            <view class="flex items-center space-x-2 gap-2">
+              <image src="/assets/delivery.png" class="w-6 h-6" />
+              <text class="text-xl text-black">送到哪里</text>
+            </view>
+
+            <view class="w-full">
+              <button class="submit-btn py-2" style="width: 100%;" size="default">
+                去下单
+              </button>
+            </view>
+          </view>
+        </view>
+      </view>
     </view>
-    <view>
-    123
-    </view>
-    </view>
-  </view>
-</scroll-view>
+  </scroll-view>
+</view>
+
+<custom-tabbar />

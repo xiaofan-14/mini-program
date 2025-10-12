@@ -1,0 +1,13 @@
+<view class="fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-lg bg-white/30 overflow-hidden pb-2">
+  <!-- 状态栏占位 -->
+  <view class="w-full" style="height: {{statusBarHeight}}px;"></view>
+
+  <!-- 导航内容 -->
+  <view class="flex items-center justify-between px-4 py-2">
+    <text class="text-black text-lg font-bold">{{ title }}</text>
+  </view>
+</view>
+
+<!-- 导航栏底部发光条 -->
+<view class="nav-glow fixed top-0 left-0 w-full h-10 z-40" style="margin-top: {{navHeight - 60}}px; background: linear-gradient(to right, #3dee95, #9ef3ce, #71f8a5);filter: blur(40px); opacity: 1;">
+</view>
