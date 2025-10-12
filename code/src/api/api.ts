@@ -1,4 +1,5 @@
 import { post } from "../utils/https";
+import type { TaskType } from 'src/type'
 
 // 登录
 export async function signin(code: string, userInfo: WechatMiniprogram.UserInfo) {
@@ -7,4 +8,9 @@ export async function signin(code: string, userInfo: WechatMiniprogram.UserInfo)
     nickName: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl
   });
+}
+
+// 发布任务
+export async function createTask(data: TaskType){
+  return await post('task/publish', data)
 }

@@ -15,3 +15,19 @@ export interface UserInfo {
   createdAt: string
   updatedAt: string
 }
+
+export interface TaskType {
+  title: string,
+  type: string,
+  description: string,
+  reward: number,
+  pickupAddress: string,
+  deliveryAddress: string,
+  weight: string,
+  deliveryTime: string,
+  genderRequirement: string,
+  needBuilding: boolean,
+  pickupCode: string,
+  contactPhone: string,
+  deadline: string,
+}

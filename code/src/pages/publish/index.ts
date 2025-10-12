@@ -1,3 +1,7 @@
+import type { TaskType } from 'src/type'
+import { calcDeadline } from 'src/utils/util'
+import { createTask } from 'src/api/api'  
+
 interface PakcageType {
   type: string,
   weight: string,
@@ -6,6 +10,7 @@ interface PakcageType {
   needBuilding: boolean,
   notes: string,
   price: number,
+  pickupCode: number
 }
 
 interface Address {
@@ -57,7 +62,6 @@ Page({
       });
     }
   },
-
   onPickerChange(e: any) {
     const field = e.currentTarget.dataset.field
     const value = e.detail.value
@@ -90,7 +94,6 @@ Page({
       this.setData({ showPackageModal: false })
     }, 300)
   },
-
   selectType(e: any) {
     const type = e.currentTarget.dataset.type
     this.setData({ 'packageInfo.type': type })
@@ -115,7 +118,6 @@ Page({
     this.setData({ [`packageInfo.${field}`]: e.detail.value })
   },
   savePackageInfo() {
-    console.log(this.data.packageInfo)
     this.setData({ packageText: this.formatPackageInfo(this.data.packageInfo) })
     this.closePackageModal()
   },
@@ -133,6 +135,46 @@ Page({
     if (gender) parts.push(gender)
 
     return parts.join(' / ')
+  },
+  async onSubmit() {
+    try {
+      const { pickup, delivery, packageInfo } = this.data
+
+      if (!pickup.address || !delivery.address) {
+        return wx.showToast({ title: '请完善取件和收件信息', icon: 'none' })
+      }
+
+      if (!packageInfo.price || packageInfo.price <= 0) {
+        return wx.showToast({ title: '请填写任务赏金', icon: 'none' })
+      }
+      const deadline = calcDeadline(packageInfo.deliveryTime)
+      const title = `${packageInfo.type || '任务'}（${pickup.address?.slice(0, 6)} to ${delivery.address?.slice(0, 6)}）`
+      const reqData = {
+        title,
+        type: packageInfo.type || '其他',
+        description: packageInfo.notes || '',
+        reward: packageInfo.price,
+        pickupAddress: `${pickup.address} (${pickup.name} ${pickup.phone})`,
+        deliveryAddress: `${delivery.address} (${delivery.name} ${delivery.phone})`,
+        weight: packageInfo.weight || '',
+        deliveryTime: packageInfo.deliveryTime || '',
+        genderRequirement: packageInfo.gender || '',
+        needBuilding: packageInfo.needBuilding || false,
+        pickupCode: packageInfo.pickupCode || '',
+        contactPhone: pickup.phone || '',
+        deadline: deadline, 
+      } as TaskType
+      wx.showLoading({ title: '发布中...', mask: true })
+      await createTask(reqData)
+      wx.hideLoading()
+      wx.showToast({ title: '发布成功', icon: 'success' })
+      setTimeout(() => {
+        wx.navigateTo({ url: '/pages/task/index' })
+      }, 1000)
+    } catch (error: any) {
+      wx.hideLoading()
+      wx.showToast({ title: error?.message || '发布失败', icon: 'none' })
+    }
   },
   go(e: any) {
     const type = e.currentTarget.dataset.type;
