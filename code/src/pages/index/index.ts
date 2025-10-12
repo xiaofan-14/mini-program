@@ -6,7 +6,17 @@ const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia0
 Page({
   data: {
     statusBarHeight: 40,
-    navHeight: 64
+    navHeight: 64,
+    pickup: {
+      address: "",
+      name: "",
+      phone: ""
+    },
+    delivery: {
+      address: "",
+      name: "",
+      phone: ""
+    }
   },
 
   onLoad() {
@@ -19,5 +29,33 @@ Page({
       navHeight
     })
   },
+
+  onShow() {
+    const pickupData = wx.getStorageSync('pickupData');
+    if (pickupData) {
+      this.setData({
+        pickup: {
+          address: pickupData.address,
+          name: pickupData.name,
+          phone: pickupData.phone
+        }
+      });
+    }
+    const deliveryData = wx.getStorageSync('deliveryData');
+    if (deliveryData) {
+      this.setData({
+        delivery: {
+          address: deliveryData.address,
+          name: deliveryData.name,
+          phone: deliveryData.phone
+        }
+      });
+    }
+  },
+
+  go(e: any) {
+    const type = e.currentTarget.dataset.type;
+    wx.navigateTo({ url: `/pages/address/index?type=${type}` });
+  }
 })
 

@@ -10,19 +10,30 @@
         <view class="glass-layer absolute inset-0 pointer-events-none"></view>
         <view class="glass-inner-shadow absolute inset-0 pointer-events-none"></view>
         <!-- 主体内容 -->
-        <view bindtap="goToForm">
-          <view>
+        <view>
+          <view class="flex justify-between items-center">
             <text class="text-2xl font-bold text-[#00d3ab]">跑腿</text>
+            <text class="subtitle text-lg block opacity-80">让生活更便捷</text>
           </view>
           <view class="w-full p-4 mt-4 flex flex-col gap-8">
-            <view class="flex items-center space-x-2 gap-2">
-              <image src="/assets/pickup.png" class="w-6 h-6" />
-              <text class="text-xl text-black">从哪里取</text>
+            <view class="flex flex-col gap-2" catchtap="go" data-type="pickup">
+              <view class="flex items-center gap-2">
+                <image src="/assets/pickup.png" class="w-6 h-6" />
+                <text class="text-xl text-black">{{ pickup.address || '从哪里取' }}</text>
+              </view>
+              <view class="flex gap-2">
+                <text class="text-sm">{{pickup.name}} {{ pickup.phone }}</text>
+              </view>
             </view>
 
-            <view class="flex items-center space-x-2 gap-2">
-              <image src="/assets/delivery.png" class="w-6 h-6" />
-              <text class="text-xl text-black">送到哪里</text>
+            <view class="flex flex-col gap-2" catchtap="go" data-type="delivery">
+              <view class="flex items-center gap-2">
+                <image src="/assets/delivery.png" class="w-6 h-6" />
+                <text class="text-xl text-black">{{ delivery.address || '送到哪里' }}</text>
+              </view>
+              <view class="flex gap-2">
+                <text class="text-sm">{{delivery.name}} {{ delivery.phone }}</text>
+              </view>
             </view>
 
             <view class="w-full">
@@ -30,6 +41,11 @@
                 去下单
               </button>
             </view>
+          </view>
+          <view class="w-full flex justify-between mt-2">
+            <view class="flex-1 text-center">取快递</view>
+            <view class="flex-1 text-center">取外卖</view>
+            <view class="flex-1 text-center">代办事</view>
           </view>
         </view>
       </view>

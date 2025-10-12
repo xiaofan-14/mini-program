@@ -1,0 +1,43 @@
+<custom-nav title="{{pageTitle}}" showBack="{{true}}"></custom-nav>
+
+<view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-gray-100 to-blue-100 flex items-start justify-center p-4">
+  <!-- 毛玻璃卡片 -->
+  <view class="w-full max-w-md bg-white/50 backdrop-blur-md rounded-2xl p-6 shadow-lg">
+    
+    <!-- 地址输入 -->
+    <view class="mb-4">
+      <text class="block text-gray-700 font-medium mb-1">地 址</text>
+      <input class="w-full p-3 rounded-xl bg-white/30 backdrop-blur-sm border border-gray-200 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 outline-none" 
+             placeholder="请输入{{typeText}}地址" 
+             bindinput="onInput" 
+             data-field="address" 
+             value="{{address}}"/>
+    </view>
+
+    <!-- 联系人 -->
+    <view class="mb-4">
+      <text class="block text-gray-700 font-medium mb-1">联系人</text>
+      <input class="w-full p-3 rounded-xl bg-white/30 backdrop-blur-sm border border-gray-200 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 outline-none" 
+             placeholder="请输入姓名" 
+             bindinput="onInput" 
+             data-field="name" 
+             value="{{name}}"/>
+    </view>
+
+    <!-- 电话 -->
+    <view class="mb-6">
+      <text class="block text-gray-700 font-medium mb-1">电 话</text>
+      <input class="w-full p-3 rounded-xl bg-white/30 backdrop-blur-sm border border-gray-200 focus:border-blue-400 focus:ring-1 focus:ring-blue-200 outline-none" 
+             type="number" 
+             placeholder="请输入电话" 
+             bindinput="onInput" 
+             data-field="phone" 
+             value="{{phone}}"/>
+    </view>
+
+    <!-- 提交按钮 -->
+    <button class="w-full bg-blue-500 hover:bg-blue-600 text-white font-medium py-3 rounded-xl shadow-md" bindtap="onSubmit">
+      保存并使用
+    </button>
+  </view>
+</view>

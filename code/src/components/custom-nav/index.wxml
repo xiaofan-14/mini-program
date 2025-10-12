@@ -1,10 +1,18 @@
-<view class="fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-lg bg-white/30 overflow-hidden pb-2">
+<view class="custom-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-lg bg-white/30 overflow-hidden pb-2">
   <!-- 状态栏占位 -->
   <view class="w-full" style="height: {{statusBarHeight}}px;"></view>
 
   <!-- 导航内容 -->
   <view class="flex items-center justify-between px-4 py-2">
-    <text class="text-black text-lg font-bold">{{ title }}</text>
+    <!-- 返回按钮 -->
+    <view wx:if="{{showBack}}" bindtap="onBack" class="flex items-center">
+      <image src="/assets/back.png" class="w-6 h-6" />
+    </view>
+    <text wx:if="{{ !showBack }}" class="text-black text-lg font-bold flex-1">{{title}}</text>
+    <text wx:else class="text-black text-lg text-center font-bold flex-1">{{title}}</text>
+
+    <!-- 占位保持左右对齐 -->
+    <view class="w-4"></view>
   </view>
 </view>
 
