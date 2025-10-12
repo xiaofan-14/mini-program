@@ -1,4 +1,4 @@
-<view class="custom-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-lg bg-white/30 overflow-hidden pb-2">
+<view class="custom-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-sm bg-white/30 overflow-hidden pb-2">
   <!-- 状态栏占位 -->
   <view class="w-full" style="height: {{statusBarHeight}}px;"></view>
 

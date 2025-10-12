@@ -37,7 +37,7 @@
             </view>
 
             <view class="w-full">
-              <button class="submit-btn py-2" style="width: 100%;" size="default">
+              <button class="submit-btn py-2" catchtap="publish" style="width: 100%;" size="default">
                 去下单
               </button>
             </view>

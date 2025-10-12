@@ -56,6 +56,10 @@ Page({
   go(e: any) {
     const type = e.currentTarget.dataset.type;
     wx.navigateTo({ url: `/pages/address/index?type=${type}` });
+  },
+
+  publish() {
+    wx.navigateTo({ url: "/pages/publish/index" })
   }
 })
 

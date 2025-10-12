@@ -1,0 +1,169 @@
+<custom-nav title="发布任务" showBack="{{true}}"></custom-nav>
+
+<view class="min-h-screen bg-gradient-to-b from-green-100 to-white-100">
+  <scroll-view scroll-y class="scroll-content" style="padding-top: {{navHeight + 10}}px;">
+    <view class="p-4 flex flex-col gap-6">
+      <!-- 取件/送件信息 -->
+      <view class="relative overflow-hidden rounded-xl p-6 bg-white/50 backdrop-blur-md rounded-2xl p-6 shadow-md flex flex-col gap-4">
+        <!-- 取件信息 -->
+        <view class="flex gap-2">
+          <!-- 图标 -->
+          <view class="mt-1">
+            <image src="/assets/take.png" class="w-6 h-6" />
+          </view>
+          <!-- 文字区域 -->
+          <view class="flex flex-col" catchtap="go" data-type="pickup">
+            <text class="text-lg text-black">{{ pickup.address || '从哪里取' }}</text>
+            <text class="text-xs">{{ pickup.name }} {{ pickup.phone }}</text>
+          </view>
+        </view>
+        <!-- 收件信息 -->
+        <view class="flex gap-2">
+          <!-- 图标 -->
+          <view class="mt-1">
+            <image src="/assets/send.png" class="w-6 h-6" />
+          </view>
+          <!-- 文字区域 -->
+          <view class="flex flex-col" catchtap="go" data-type="delivery">
+            <text class="text-lg text-black">{{ delivery.address || '送到哪里' }}</text>
+            <text class="text-xs">{{ delivery.name }} {{ delivery.phone }}</text>
+          </view>
+        </view>
+        <!-- 包裹详情 -->
+        <view class="flex gap-2" bindtap="showPackageModal">
+          <!-- 图标 -->
+          <view class="mt-1">
+            <image src="/assets/package.png" class="w-6 h-6" />
+          </view>
+          <!-- 文字区域 -->
+          <view class="flex items-center">
+            <text wx:if="{{ packageText.length <= 0 }}" class="text-md text-black">选择包裹详情</text>
+            <text wx:else class="text-sm text-black">{{ packageText }}</text>
+          </view>
+        </view>
+        <!-- 详细描述 -->
+        <view wx:if="{{ packageInfo.notes.length > 0 }}" class="flex gap-2">
+          <!-- 图标 -->
+          <view class="mt-1 w-6 h-6"></view>
+          <!-- 文字区域 -->
+          <view class="flex items-center">
+            <text class="text-sm text-black">{{ packageInfo.notes }}123</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 隐私信息 -->
+      <view class="relative overflow-hidden rounded-xl p-6 bg-white/50 backdrop-blur-md shadow-md">
+        <view class="text-lg mb-4 block text-gray-800 flex items-center gap-2">
+          隐私信息
+          <text class="text-sm text-gray-500">(仅接单员可见)</text>
+        </view>
+
+        <!-- 取件码 -->
+        <view class="flex items-center gap-2 mb-3">
+          <text class="w-20 text-gray-700">取 件 码：</text>
+          <input class="flex-1 py-2 px-3 rounded-lg bg-transparent outline-none placeholder-gray-400 text-gray-800" placeholder="请输入取件码" bindinput="onInput" data-field="pickupCode" />
+        </view>
+
+        <!-- 手机尾号 -->
+        <view class="flex items-center gap-2">
+          <text class="w-20 text-gray-700">手机尾号：</text>
+          <input class="flex-1 py-2 px-3 rounded-lg bg-transparent outline-none placeholder-gray-400 text-gray-800" placeholder="请输入手机尾号" type="number" bindinput="onInput" data-field="contactPhone" />
+        </view>
+      </view>
+
+      <!-- 任务报酬 -->
+      <view class="relative overflow-hidden flex items-center justify-between rounded-xl p-6 bg-white/50 backdrop-blur-md shadow-md">
+        <view class="flex flex-col gap-1">
+          <text class="text-lg font-semibold text-gray-800">任务报酬</text>
+          <text class="text-xs text-gray-400">请至少设置为2元</text>
+        </view>
+        <input class="w-24 py-2 px-3 rounded-xl bg-gray-100/80 text-center placeholder-gray-400 text-gray-800 outline-none" type="number" placeholder="金额" bindinput="onInput" data-field="price" />
+      </view>
+
+      <view class="h-20"></view>
+      <!-- 提交按钮 -->
+      <view class="fixed bottom-5 left-0 w-full px-6">
+        <view class="flex items-center justify-between bg-white/50 backdrop-blur-md rounded-full shadow-md overflow-hidden border border-white/30">
+          <!-- 左侧价格 -->
+          <view class="flex-1 pl-12">
+            <text class="text-lg font-semibold text-gray-800">¥{{ packageInfo.price || '0.00' }}</text>
+          </view>
+          <!-- 右侧按钮 -->
+          <button class="bg-[#33CC99] text-white font-medium py-3 px-8 rounded-l-none rounded-r-full" bindtap="onSubmit">
+            发布任务
+          </button>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 底部弹出层 -->
+  <!-- 遮罩层 -->
+  <view wx:if="{{ showPackageModal }}" class="fixed inset-0 bg-black/30 flex items-end z-50" catchtouchmove="true">
+    <!-- 弹出框 -->
+    <view animation="{{ popupAnimation }}" class="w-full bg-white/50 backdrop-blur-md rounded-t-3xl p-4 shadow-lg">
+      <text class="text-lg font-semibold mb-4 block">填写任务需求</text>
+
+      <!-- 类型 -->
+      <view class="mb-3">
+        <text class="text-sm font-medium mb-2 block">物品类型</text>
+        <view class="flex gap-2 flex-wrap">
+          <view wx:for="{{typeOptions}}" wx:key="value" class="px-4 py-2 rounded-md border cursor-pointer text-xs {{ packageInfo.type === item ? 'bg-[#9ef3ce] text-white' : 'bg-white/30 border-gray-200 text-black' }}" bindtap="selectType" data-type="{{item}}">
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 重量 -->
+      <view class="mb-3">
+        <text class="text-sm font-medium mb-2 block">重量 (kg)</text>
+        <view class="flex gap-2 flex-wrap">
+          <view wx:for="{{weightOptions}}" wx:key="value" class="px-4 py-2 rounded-md border cursor-pointer text-xs {{ packageInfo.weight === item ? 'bg-[#9ef3ce] text-white' : 'bg-white/30 border-gray-200 text-black' }}" bindtap="selectWeight" data-weight="{{item}}">
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 时间要求 -->
+      <view class="mb-3">
+        <text class="text-sm font-medium mb-2 block">送达时间</text>
+        <view class="flex gap-2 flex-wrap">
+          <view wx:for="{{timeOptions}}" wx:key="value" class="px-4 py-2 rounded-md border cursor-pointer text-xs {{ packageInfo.deliveryTime === item ? 'bg-[#9ef3ce] text-white' : 'bg-white/30 border-gray-200 text-black' }}" bindtap="selectTime" data-time="{{item}}">
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 性别要求 -->
+      <view class="mb-3">
+        <text class="text-sm font-medium mb-2 block">性别要求</text>
+        <view class="flex gap-2 flex-wrap">
+          <view wx:for="{{genderOptions}}" wx:key="value" class="px-4 py-2 rounded-md border cursor-pointer text-xs {{ packageInfo.gender === item ? 'bg-[#9ef3ce] text-white' : 'bg-white/30 border-gray-200 text-black' }}" bindtap="selectGender" data-gender="{{item}}">
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <!-- 是否进楼 -->
+      <view class="flex items-center justify-between mb-3">
+        <text class="text-sm font-medium mb-2 block">是否进楼</text>
+        <switch checked="{{packageInfo.needBuilding}}" bindchange="onSwitchChange" data-field="needBuilding" />
+      </view>
+
+      <!-- 备注 -->
+      <view class="mb-3">
+        <text class="text-sm font-medium mb-2 block">更多任务描述</text>
+        <view class="w-full">
+          <textarea class="w-full py-2 rounded-xl bg-white/30 border border-gray-200 outline-none resize-none px-2" placeholder="请输入任务要求" bindinput="onInput" data-field="notes"></textarea>
+        </view>
+      </view>
+
+      <!-- 按钮 -->
+      <view class="flex gap-2 mt-2">
+        <button class="flex-1 bg-gray-300 rounded-xl py-2" bindtap="closePackageModal">取消</button>
+        <button class="flex-1 bg-blue-500 text-white rounded-xl py-2" bindtap="savePackageInfo">保存</button>
+      </view>
+    </view>
+  </view>
+</view>
