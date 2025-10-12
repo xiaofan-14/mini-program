@@ -1,7 +1,7 @@
 <custom-nav title="发布任务" showBack="{{true}}"></custom-nav>
 
 <view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
-  <scroll-view scroll-y class="scroll-content" style="padding-top: {{navHeight + 10}}px;">
+  <scroll-view scroll-y style="padding-top: {{navHeight + 10}}px;">
     <view class="p-4 flex flex-col gap-6">
       <!-- 取件/送件信息 -->
       <view class="relative overflow-hidden rounded-xl p-6 bg-white/50 backdrop-blur-md rounded-2xl p-6 shadow-md flex flex-col gap-4">
@@ -86,9 +86,10 @@
       <view class="fixed bottom-5 left-0 w-full px-6">
         <view class="flex items-center justify-between bg-white/50 backdrop-blur-md rounded-full shadow-md overflow-hidden border border-white/30">
           <!-- 左侧价格 -->
-          <view class="flex-1 pl-12">
+          <view class="flex-1 pl-6">
             <text class="text-lg font-semibold text-gray-800">¥{{ packageInfo.price || '0.00' }}</text>
           </view>
+          <view class="flex-1"></view>
           <!-- 右侧按钮 -->
           <button class="bg-[#33CC99] text-white font-medium py-3 px-8 rounded-l-none rounded-r-full" bindtap="onSubmit">
             发布任务
@@ -155,7 +156,7 @@
       <view class="mb-3">
         <text class="text-sm font-medium mb-2 block">更多任务描述</text>
         <view class="w-full">
-          <textarea class="w-full py-2 rounded-xl bg-white/30 border border-gray-200 outline-none resize-none px-2" placeholder="请输入任务要求" bindinput="onInput" data-field="notes"></textarea>
+          <textarea style="padding-left: 6px;" class="w-full py-2 rounded-xl bg-white/30 border border-gray-200 outline-none resize-none" placeholder="请输入任务要求" bindinput="onInput" data-field="notes"></textarea>
         </view>
       </view>
 

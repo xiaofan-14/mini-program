@@ -6,7 +6,7 @@
         <text class="text-sm mt-1" style="color: {{active === 'home' ? '#35996e' : '#888'}}">首页</text>
       </view>
       <view class="tab-item flex flex-col items-center" bindtap="goTask">
-        <image src="/assets/task.png" class="w-6 h-6" />
+        <image src="/assets/tasks.png" class="w-6 h-6" />
         <text class="text-sm mt-1" style="color: {{active === 'task' ? '#35996e' : '#888'}}">任务</text>
       </view>
       <view class="tab-item flex flex-col items-center" bindtap="goProfile">

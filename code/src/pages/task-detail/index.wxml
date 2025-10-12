@@ -1,0 +1,73 @@
+<view class="min-h-screen bg-gradient-to-b from-gray-100 to-blue-100 p-4">
+  <!-- 顶部导航栏 -->
+  <custom-nav title="任务详情" showBack="{{true}}"></custom-nav>
+  <!-- 滚动内容 -->
+  <scroll-view scroll-y class="mt-20 space-y-6">
+    <!-- 任务信息卡片 -->
+    <view class="glass-card relative overflow-hidden p-6">
+      <text class="text-lg font-semibold text-gray-800 mb-4 block">任务信息</text>
+      <!-- 取件 / 送件地址 -->
+      <view class="mb-3 flex justify-between">
+        <text class="font-medium text-gray-700 block">取件地址</text>
+        <text class="text-gray-900">{{ task.pickupAddress }}</text>
+      </view>
+      <view class="mb-3 flex justify-between">
+        <text class="font-medium text-gray-700 block">送达地址</text>
+        <text class="text-gray-900">{{ task.deliveryAddress }}</text>
+      </view>
+      <!-- 包裹信息 -->
+      <view class="mb-3 flex justify-between">
+        <text class="font-medium text-gray-700 block">包裹信息</text>
+        <text class="text-gray-900">{{ task.itemName }} / {{ task.weight }} / {{ task.quantity }}件</text>
+      </view>
+      <!-- 其他要求 -->
+      <view class="mb-3 flex justify-between">
+        <text class="font-medium text-gray-700 block">其他要求</text>
+        <text class="text-gray-900">{{ task.notes }}</text>
+      </view>
+      <!-- 是否进楼 -->
+      <view class="mb-3 flex justify-between">
+        <text class="font-medium text-gray-700 block">是否进楼</text>
+        <text class="text-gray-900">{{task.needBuilding ? '进楼' : '不进楼'}}</text>
+      </view>
+      <!-- 报酬 -->
+      <view class="flex items-center justify-between mt-4">
+        <text class="text-lg font-semibold text-gray-800">任务报酬</text>
+        <text class="text-xl font-bold text-green-600">¥{{ task.price }}</text>
+      </view>
+    </view>
+
+
+    <view class="glass-card relative overflow-hidden p-4 rounded-2xl bg-white/50 backdrop-blur-md border border-white/30 shadow-md">
+      <text class="text-lg font-semibold text-gray-800 mb-2 block">接单须知</text>
+      <view wx:for="{{rules}}" wx:key="index" class="flex items-start gap-2 mb-2">
+        <text class="text-gray-900">{{ index + 1 }}.</text>
+        <text class="text-gray-800">{{ item }}</text>
+      </view>
+    </view>
+
+    <!-- 联系方式卡片 -->
+    <!-- <view class="glass-card relative overflow-hidden rounded-2xl p-6 shadow-lg border border-white/30 backdrop-blur-md">
+      <text class="text-lg font-semibold text-gray-800 mb-4 block">联系方式</text>
+      <view class="mb-2 flex items-center justify-between">
+        <text class="text-gray-700">联系人</text>
+        <text class="text-gray-900">{{ task.contactName }}</text>
+      </view>
+      <view class="mb-2 flex items-center justify-between">
+        <text class="text-gray-700">电话</text>
+        <text class="text-gray-900">{{ task.contactPhone }}</text>
+      </view>
+      <view class="mb-2 flex items-center justify-between">
+        <text class="text-gray-700">取件码</text>
+        <text class="text-gray-900">{{ task.pickupCode }}</text>
+      </view>
+    </view> -->
+
+    <!-- 接单按钮 -->
+    <view class="fixed bottom-6 left-0 w-full px-4">
+      <button style="width: 100%;" class="border bg-[#35996e] text-white font-semibold py-3 rounded-full shadow-md" bindtap="acceptTask">
+        接单
+      </button>
+    </view>
+  </scroll-view>
+</view>
