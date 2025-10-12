@@ -1,6 +1,6 @@
 <custom-nav title="发布任务" showBack="{{true}}"></custom-nav>
 
-<view class="min-h-screen bg-gradient-to-b from-green-100 to-white-100">
+<view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
   <scroll-view scroll-y class="scroll-content" style="padding-top: {{navHeight + 10}}px;">
     <view class="p-4 flex flex-col gap-6">
       <!-- 取件/送件信息 -->

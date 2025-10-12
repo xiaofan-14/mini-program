@@ -1,6 +1,6 @@
 <custom-nav title="{{pageTitle}}" showBack="{{true}}"></custom-nav>
 
-<view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-gray-100 to-blue-100 flex items-start justify-center p-4">
+<view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#ffffff] flex items-start justify-center p-4">
   <!-- 毛玻璃卡片 -->
   <view class="w-full max-w-md bg-white/50 backdrop-blur-md rounded-2xl p-6 shadow-lg">
     <!-- 地址输入 -->
