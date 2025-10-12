@@ -1,10 +1,24 @@
 <custom-nav title="任务列表" showBack="{{false}}"></custom-nav>
 
+<view style="top: {{navHeight + 20}}px" class="sticky z-50 mx-4 my-4 bg-white/50 backdrop-blur-md rounded-2xl p-1 shadow-md border border-white/30 flex justify-around">
+  <view class="flex-1">
+    <button class="w-full py-2 rounded-2xl text-sm font-medium {{ activeTab === 'pending' ? 'bg-green-400 text-white' : 'text-gray-700 bg-transparent' }}" bindtap="switchTab" data-tab="pending">
+      待接单
+    </button>
+  </view>
+  <view class="flex-1">
+    <button class="w-full py-2 rounded-2xl text-sm font-medium {{ activeTab === 'accepted' ? 'bg-green-400 text-white' : 'text-gray-700 bg-transparent' }}" bindtap="switchTab" data-tab="accepted">
+      已接单
+    </button>
+  </view>
+</view>
+
 <view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
-  <scroll-view scroll-y style="padding-top: {{navHeight + 30}}px;">
-    <view wx:for="{{tasks}}" wx:key="id" class="mb-4 px-2" bindtap="go">
+  <!-- 任务列表 -->
+  <scroll-view scroll-y style="padding-top: {{navHeight}}px;">
+    <view wx:for="{{filteredTasks}}" wx:key="id" class="mb-4 px-2" bindtap="go">
       <!-- 毛玻璃任务卡片 -->
-      <view class="relative overflow-hidden rounded-2xl p-4 bg-white/50 backdrop-blur-md border border-gray-200 shadow-md">   
+      <view class="relative overflow-hidden rounded-2xl p-4 bg-white/50 backdrop-blur-md border border-gray-200 shadow-md">
         <!-- 任务类型和报酬 -->
         <view class="flex justify-between items-center mb-2">
           <text class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-400">{{item.type}}</text>
