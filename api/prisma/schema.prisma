@@ -1,0 +1,95 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 待接单 / 已接单 / 已完成 / 已取消
+enum TaskStatus {
+  PENDING
+  ACCEPTED
+  COMPLETED
+  CANCELLED
+}
+
+// 发布消耗、任务完成、提现
+enum TransactionType {
+  PUBLISH_CONSUME
+  TASK_COMPLETE
+  WITHDRAW
+}
+
+// 进行中 / 已完成 / 已取消
+enum TransactionStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
+}
+
+model User {
+  id              String   @id @default(cuid())
+  openid          String   @unique
+  unionid         String?  @unique
+  nickName        String?
+  avatarUrl       String?
+  gender          Int?     // 0:未知, 1:男, 2:女
+  city            String?
+  province        String?
+  country         String?
+  
+  balance         Float    @default(0)
+  totalIncome     Float    @default(0)
+  pendingIncome   Float    @default(0)
+  withdrawn       Float    @default(0)
+  
+  publishedTasks  Task[]   @relation("Publisher")
+  receivedTasks   Task[]   @relation("Receiver")
+  transactions    Transaction[]
+
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Task {
+  id            String      @id @default(cuid())
+  title         String
+  type          String
+  description   String?
+  reward        Float
+  status        TaskStatus
+  pickupAddress String
+  deliveryAddress String
+  weight        String?
+  deliveryTime  String?
+  genderRequirement String?
+  needBuilding  Boolean     @default(false)
+  pickupCode    String?
+  contactPhone  String?
+  
+  publisherId   String
+  receiverId    String?
+  
+  publisher     User        @relation("Publisher", fields: [publisherId], references: [id])
+  receiver      User?       @relation("Receiver", fields: [receiverId], references: [id])
+  transactions  Transaction[]
+
+  deadline      DateTime?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
+
+model Transaction {
+  id         String            @id @default(cuid())
+  userId     String
+  type       TransactionType
+  amount     Float
+  status     TransactionStatus
+  taskId     String?
+  createdAt  DateTime          @default(now())
+  
+  user       User              @relation(fields: [userId], references: [id])
+  task       Task?             @relation(fields: [taskId], references: [id])
+}

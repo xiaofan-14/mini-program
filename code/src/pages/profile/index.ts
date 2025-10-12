@@ -1,3 +1,8 @@
+import { signin } from '../../api/api'
+import { useCache } from '../../hooks/useCache'
+
+const { setCache, getCache } = useCache();
+
 Page({
   data: {
     userInfo: {} as WechatMiniprogram.UserInfo,
@@ -10,26 +15,40 @@ Page({
     navHeight: 64,
   },
 
-  getUserProfile() {
+  async getUserProfile() {
     wx.getUserProfile({
-      desc: '用于完善个人资料', // 必填
-      success: res => {
-        console.log(res.userInfo) // 这里就是你自己的微信信息
-        this.setData({ userInfo: res.userInfo })
-        wx.setStorageSync('userInfo', res.userInfo) // 可缓存
+      desc: '用于完善个人资料',
+      success: async (res) => {
+        const userInfo = res.userInfo;
+        this.setData({ userInfo });
+        wx.setStorageSync('userInfo', userInfo);
+
+        try {
+          const loginRes = await wx.login();
+          if (!loginRes.code) throw new Error('微信登录失败');
+
+          const { token, user } = await signin(loginRes.code, userInfo);
+          setCache('token', token, 86400);
+          setCache('user', user);
+          wx.showToast({ title: '登录成功', icon: 'success' });
+        } catch (err) {
+          console.error(err);
+          wx.showToast({ title: '登录失败', icon: 'error' });
+        }
       },
       fail: () => {
-        wx.showToast({ title: '授权失败', icon: 'none' })
+        wx.showToast({ title: '授权失败', icon: 'none' });
       }
     })
-  }, 
+  },
 
   onLoad() {
     const windowInfo = wx.getWindowInfo();
     const statusBarHeight = windowInfo.statusBarHeight;
     const navHeight = statusBarHeight + 44;
     this.setData({ statusBarHeight, navHeight });
-    const cachedUser = wx.getStorageSync('userInfo')
+    const cachedUser = getCache('user') as WechatMiniprogram.UserInfo
+
     if (cachedUser) {
       this.setData({ userInfo: cachedUser })
     }
