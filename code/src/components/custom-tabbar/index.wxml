@@ -2,16 +2,16 @@
   <view class="bg-white/70 backdrop-blur-md border border-gray-200 z-50 rounded-full px-6">
     <view class="flex justify-between items-center p-2">
       <view class="tab-item flex flex-col items-center" bindtap="goHome">
-        <text class="text-xl">🏠</text>
-        <text class="text-xs mt-1" style="color: {{active === 'home' ? '#a855f7' : '#888'}}">首页</text>
+        <image src="/assets/home.png" class="w-6 h-6" />
+        <text class="text-sm mt-1" style="color: {{active === 'home' ? '#35996e' : '#888'}}">首页</text>
       </view>
-      <view class="tab-item flex flex-col items-center" bindtap="goPublish">
-        <text class="text-xl">➕</text>
-        <text class="text-xs mt-1" style="color: {{active === 'publish' ? '#a855f7' : '#888'}}">发布</text>
+      <view class="tab-item flex flex-col items-center" bindtap="goTask">
+        <image src="/assets/task.png" class="w-6 h-6" />
+        <text class="text-sm mt-1" style="color: {{active === 'task' ? '#35996e' : '#888'}}">任务</text>
       </view>
       <view class="tab-item flex flex-col items-center" bindtap="goProfile">
-        <text class="text-xl">👤</text>
-        <text class="text-xs mt-1" style="color: {{active === 'profile' ? '#a855f7' : '#888'}}">我的</text>
+        <image src="/assets/profile.png" class="w-6 h-6" />
+        <text class="text-sm mt-1" style="color: {{active === 'profile' ? '#35996e' : '#888'}}">我的</text>
       </view>
     </view>
   </view>

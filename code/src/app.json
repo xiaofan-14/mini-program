@@ -2,7 +2,9 @@
   "pages": [
     "pages/index/index",
     "pages/address/index",
-    "pages/publish/index"
+    "pages/publish/index",
+    "pages/profile/index",
+    "pages/task/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",
@@ -11,5 +13,13 @@
   },
   "style": "v2",
   "componentFramework": "glass-easel",
-  "lazyCodeLoading": "requiredComponents"
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "custom": true,
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页" },
+      { "pagePath": "pages/task/index", "text": "任务" },
+      { "pagePath": "pages/profile/index", "text": "我的" }
+    ]
+  }
 }

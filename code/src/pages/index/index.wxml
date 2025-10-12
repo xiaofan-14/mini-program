@@ -53,4 +53,4 @@
   </scroll-view>
 </view>
 
-<custom-tabbar />
+<custom-tabbar active="home" />

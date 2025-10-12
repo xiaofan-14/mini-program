@@ -1,0 +1,68 @@
+<custom-nav title="我的" showBack="{{false}}" />
+
+<view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#ffffff]">
+  <scroll-view scroll-y class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]" style="padding-top: {{navHeight + 20}}px;">
+    <!-- 顶部个人信息卡 -->
+    <view bindtap="getUserProfile" class="mx-4 mt-2 rounded-xl bg-white/40 backdrop-blur-md p-4 shadow-md flex items-center gap-4">
+      <image src="{{ userInfo.avatarUrl || '/assets/avatar.png' }}" class="w-14 h-14 rounded-full shadow" />
+      <view class="flex flex-col">
+        <text class="text-lg font-semibold text-gray-900">{{ userInfo.nickName || '点击登录' }}</text>
+        <text class="text-sm text-gray-500">欢迎来到校园跑腿平台</text>
+      </view>
+    </view>
+
+    <!-- 收入统计 -->
+    <view class="mx-4 mt-4 grid grid-cols-3 gap-4 text-center">
+      <view class="rounded-lg bg-white/50 backdrop-blur-md p-4 shadow-sm">
+        <text class="text-sm text-gray-500 block">总收入</text>
+        <text class="text-xl font-semibold text-green-600 block">¥{{ income.total }}</text>
+      </view>
+      <view class="rounded-lg bg-white/50 backdrop-blur-md p-4 shadow-sm">
+        <text class="text-sm text-gray-500 block">待结算</text>
+        <text class="text-xl font-semibold text-yellow-500 block">¥{{ income.pending }}</text>
+      </view>
+      <view class="rounded-lg bg-white/50 backdrop-blur-md p-4 shadow-sm">
+        <text class="text-sm text-gray-500 block">已提现</text>
+        <text class="text-xl font-semibold text-blue-500 block">¥{{ income.withdrawn }}</text>
+      </view>
+    </view>
+
+    <!-- 菜单列表 -->
+    <view class="mx-4 mt-4 rounded-xl bg-white/60 backdrop-blur-md shadow-md divide-y divide-gray-200">
+      <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="published">
+        <view class="flex items-center gap-3">
+          <image src="/assets/plus.png" class="w-5 h-5" />
+          <text class="text-gray-800 text-base">我发布的任务</text>
+        </view>
+        <text class="text-gray-400">›</text>
+      </view>
+
+      <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="accepted">
+        <view class="flex items-center gap-3">
+          <image src="/assets/receive.png" class="w-5 h-5" />
+          <text class="text-gray-800 text-base">我领取的任务</text>
+        </view>
+        <text class="text-gray-400">›</text>
+      </view>
+
+      <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToIncome">
+        <view class="flex items-center gap-3">
+          <image src="/assets/wallet.png" class="w-5 h-5" />
+          <text class="text-gray-800 text-base">收益明细</text>
+        </view>
+        <text class="text-gray-400">›</text>
+      </view>
+
+      <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToSettings">
+        <view class="flex items-center gap-3">
+          <image src="/assets/settings.png" class="w-5 h-5" />
+          <text class="text-gray-800 text-base">设置</text>
+        </view>
+        <text class="text-gray-400">›</text>
+      </view>
+    </view>
+    <view class="h-10"></view>
+  </scroll-view>
+</view>
+
+<custom-tabbar active="profile" />
