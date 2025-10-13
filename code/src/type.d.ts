@@ -30,4 +30,9 @@ export interface TaskType {
   pickupCode: string,
   contactPhone: string,
   deadline: string,
+  createdAt: string,
+  id: string,
+  receiverId: string | null,
+  status: string,
+  updatedAt: string,
 }

@@ -1,17 +1,21 @@
-export const formatTime = (date: Date) => {
-  const year = date.getFullYear()
-  const month = date.getMonth() + 1
-  const day = date.getDate()
-  const hour = date.getHours()
-  const minute = date.getMinutes()
-  const second = date.getSeconds()
+export const formatTime = (date: string | Date): string => {
+  if (!date) return '';
 
-  return (
-    [year, month, day].map(formatNumber).join('/') +
-    ' ' +
-    [hour, minute, second].map(formatNumber).join(':')
-  )
-}
+  // 兼容字符串和 Date 类型
+  const d = new Date(date);
+
+  // 补零函数
+  const pad = (n: number) => n.toString().padStart(2, '0');
+
+  const yyyy = d.getFullYear();
+  const MM = pad(d.getMonth() + 1);
+  const dd = pad(d.getDate());
+  const hh = pad(d.getHours());
+  const mm = pad(d.getMinutes());
+  const ss = pad(d.getSeconds());
+  return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`;
+};
+
 
 const formatNumber = (n: number) => {
   const s = n.toString()

@@ -1,0 +1,36 @@
+<view wx:for="{{list}}" wx:key="id" class="mb-4 px-2" bindtap="go">
+  <!-- 毛玻璃任务卡片 -->
+  <view class="relative overflow-hidden rounded-2xl p-4 bg-white/50 backdrop-blur-md border border-gray-200 shadow-md">
+    <!-- 任务类型和报酬 -->
+    <view class="flex justify-between items-center mb-2">
+      <text class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-400">{{item.type}}
+      </text>
+      <text class="text-lg font-semibold text-purple-600">¥{{item.reward}}</text>
+    </view>
+    <!-- 地址 -->
+    <view class="flex justify-between">
+      <text>送达时间</text>
+      <text>{{ item.deadline }}</text>
+    </view>
+    <view class="mb-1">
+      <text class="text-gray-700 text-sm">从：{{item.pickupAddress}}</text>
+    </view>
+    <view class="mb-2">
+      <text class="text-gray-700 text-sm">到：{{item.deliveryAddress}}</text>
+    </view>
+    <!-- 额外信息 -->
+    <view class="flex flex-wrap gap-2 text-xs text-gray-500 mb-2">
+      <text>{{item.weight}}</text>
+      <text>{{item.deliveryTime}}</text>
+      <text>{{item.genderRequirement}}</text>
+      <text>{{item.needBuilding ? '需要进楼' : '不进楼'}}</text>
+    </view>
+    <!-- 任务状态 -->
+    <view class="flex justify-between items-center">
+      <text class="text-sm text-gray-400">{{item.status}}</text>
+      <button class="bg-blue-500 text-white text-sm px-4 py-1 rounded-xl shadow-md" bindtap="viewTaskDetail" data-id="{{item.id}}">
+        查看
+      </button>
+    </view>
+  </view>
+</view>
