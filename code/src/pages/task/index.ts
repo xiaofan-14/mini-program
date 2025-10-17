@@ -38,7 +38,6 @@ Page({
      page: number
     }
     const newTasks = refresh ? list : this.data.tasks.concat(list);
-    console.log(newTasks)
     this.setData({
       tasks: newTasks,
       page: currentPage,
@@ -49,9 +48,6 @@ Page({
   viewTaskDetail(e: any) {
     const id = e.currentTarget.dataset.id;
     wx.navigateTo({ url: `/pages/task-detail/index?id=${id}` });
-  },
-  go() {
-    wx.navigateTo({ url: '/pages/task-detail/index' })
   },
 });
 
