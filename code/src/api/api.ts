@@ -9,7 +9,6 @@ export async function signin(code: string, userInfo: WechatMiniprogram.UserInfo)
     avatarUrl: userInfo.avatarUrl
   });
 }
-
 // 发布任务
 export async function createTask(data: TaskType){
   return await post('task/publish', data)
@@ -17,4 +16,8 @@ export async function createTask(data: TaskType){
 // 获取任务列表 
 export async function getTaskList() {
   return await get('task/list')
+}
+// 获取任务详情
+export async function getTaskDetail(id: string) {
+  return await get(`task/task-detail?id=${id}`)
 }

@@ -16,11 +16,10 @@ export const formatTime = (date: string | Date): string => {
   return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`;
 };
 
-
-const formatNumber = (n: number) => {
-  const s = n.toString()
-  return s[1] ? s : '0' + s
-}
+export const cleanAddress = (addr?: string) => {
+  if (!addr) return '';
+  return addr.split('(')[0].trim();
+};
 
 export function calcDeadline(limit: string): string {
   const now = new Date()
@@ -54,4 +53,15 @@ export function calcDeadline(limit: string): string {
   const ss = String(deadline.getSeconds()).padStart(2, '0')
 
   return `${yyyy}-${MM}-${dd} ${hh}:${mm}:${ss}`
+}
+
+export function getStatus(key: string): string {
+  const cache = new Map<string, string>([
+    ["PENDING",  "待接单"],
+    ["ACCEPTED", "已接单"],
+    ["COMPLETED","已完成"],
+    ["CANCELLED","已取消"],
+  ]);
+
+  return cache.get(key) ?? "已完成";
 }

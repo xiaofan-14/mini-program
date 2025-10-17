@@ -1,21 +1,8 @@
 <custom-nav title="任务列表" showBack="{{false}}"></custom-nav>
 
-<view style="top: {{navHeight + 20}}px" class="sticky z-50 mx-4 my-4 bg-white/50 backdrop-blur-md rounded-2xl p-1 shadow-md border border-white/30 flex justify-around overflow-hidden">
-  <view class="flex-1">
-    <button class="w-full py-2 rounded-2xl text-sm font-medium {{ activeTab === 'pending' ? 'bg-green-400 text-white' : 'text-gray-700 bg-transparent' }}" bindtap="switchTab" data-tab="pending">
-      待接单
-    </button>
-  </view>
-  <view class="flex-1">
-    <button class="w-full py-2 rounded-2xl text-sm font-medium {{ activeTab === 'accepted' ? 'bg-green-400 text-white' : 'text-gray-700 bg-transparent' }}" bindtap="switchTab" data-tab="accepted">
-      已接单
-    </button>
-  </view>
-</view>
-
 <view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
   <!-- 任务列表 -->
-  <scroll-view scroll-y style="padding-top: {{navHeight}}px;">
+  <scroll-view scroll-y style="padding-top: {{navHeight + 30}}px;">
     <task-list tasks="{{ tasks }}" />
   </scroll-view>
 </view>

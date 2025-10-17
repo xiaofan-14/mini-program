@@ -54,7 +54,7 @@ export async function publishTask(req: any, res: any) {
         contactPhone,
         deadline: deadline ? new Date(deadline) : undefined,
         publisherId: userId,
-        status: "PENDING"
+        status: "PENDING",
       },
     });
 
@@ -110,6 +110,20 @@ export async function listTasks(req: any, res: any) {
         ? { publisherId: userId }
         : { status: TaskStatus.PENDING },
     orderBy: { createdAt: "desc" },
+  });
+
+  res.json(tasks);
+}
+
+export async function taskDetail(req: any, res: any) {
+  const id = req.id;
+
+  const tasks = await prisma.task.findFirst({
+    where: { id: id },
+    include: {
+      publisher: true,
+      receiver: true,
+    },
   });
 
   res.json(tasks);
