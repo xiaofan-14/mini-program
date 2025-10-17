@@ -5,7 +5,10 @@ const { setCache, getCache } = useCache();
 
 Page({
   data: {
-    userInfo: {} as WechatMiniprogram.UserInfo,
+    userInfo: {
+      nickName: "",
+      avatarUrl: "",
+    } as WechatMiniprogram.UserInfo,
     income: {
       total: 320.5,
       pending: 45.0,
@@ -13,33 +16,6 @@ Page({
     },
     statusBarHeight: 40,
     navHeight: 64,
-  },
-
-  async getUserProfile() {
-    wx.getUserProfile({
-      desc: '用于完善个人资料',
-      success: async (res) => {
-        const userInfo = res.userInfo;
-        this.setData({ userInfo });
-        wx.setStorageSync('userInfo', userInfo);
-
-        try {
-          const loginRes = await wx.login();
-          if (!loginRes.code) throw new Error('微信登录失败');
-
-          const { token, user } = await signin(loginRes.code, userInfo);
-          setCache('token', token, 86400);
-          setCache('user', user);
-          wx.showToast({ title: '登录成功', icon: 'success' });
-        } catch (err) {
-          console.error(err);
-          wx.showToast({ title: '登录失败', icon: 'error' });
-        }
-      },
-      fail: () => {
-        wx.showToast({ title: '授权失败', icon: 'none' });
-      }
-    })
   },
 
   onLoad() {
@@ -65,5 +41,45 @@ Page({
 
   goToSettings() {
     wx.navigateTo({ url: '/pages/settings/index' })
+  },
+
+  async onNickNameInput(e: any) {
+    const nickName = e.detail.value
+    const temp = this.data.userInfo
+    temp.nickName = nickName
+    this.setData({
+      userInfo: temp,
+    });
+    await this.handleLogin()
+  },
+
+  async onChooseAvatar(e: any) {
+    const { avatarUrl } = e.detail
+    const temp = this.data.userInfo
+    temp.avatarUrl = avatarUrl
+    this.setData({ userInfo: temp });
+    await this.handleLogin()
+  },
+
+  async handleLogin() {
+    try {
+      if (!this.data.userInfo.avatarUrl || !this.data.userInfo.nickName) {
+        wx.showToast({ title: '请先选择头像并输入昵称', icon: 'none' });
+        return;
+      }
+
+      const loginRes = await wx.login();
+      if (!loginRes.code) throw new Error('微信登录失败');
+
+      const { token, user } = await signin(loginRes.code, this.data.userInfo);
+
+      setCache('token', token, 86400);
+      setCache('user', user);
+
+      wx.showToast({ title: '登录成功', icon: 'success' });
+    } catch (err) {
+      console.error(err);
+      wx.showToast({ title: '登录失败', icon: 'error' });
+    }
   },
 })
