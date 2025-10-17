@@ -14,8 +14,8 @@ export async function createTask(data: TaskType){
   return await post('task/publish', data)
 }
 // 获取任务列表 
-export async function getTaskList() {
-  return await get('task/list')
+export async function getTaskList(page: number, pageSize: number) {
+  return await get(`task/list?page=${page}&pageSize=${pageSize}`)
 }
 // 获取任务详情
 export async function getTaskDetail(id: string) {

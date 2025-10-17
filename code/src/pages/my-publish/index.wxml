@@ -1,0 +1,8 @@
+<custom-nav title="我发布的" showBack="{{true}}"></custom-nav>
+
+<view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
+  <!-- 任务列表 -->
+  <scroll-view scroll-y style="padding-top: {{navHeight + 30}}px;">
+    <task-list tasks="{{ tasks }}" />
+  </scroll-view>
+</view>

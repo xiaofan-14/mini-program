@@ -1,10 +1,8 @@
 <custom-nav title="任务列表" showBack="{{false}}"></custom-nav>
 
-<view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
+<view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
   <!-- 任务列表 -->
-  <scroll-view scroll-y style="padding-top: {{navHeight + 30}}px;">
-    <task-list tasks="{{ tasks }}" />
-  </scroll-view>
+  <task-list tasks="{{ tasks }}" />
 </view>
 
 <custom-tabbar active="task" />

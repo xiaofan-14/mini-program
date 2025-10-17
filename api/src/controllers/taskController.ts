@@ -99,20 +99,32 @@ export async function acceptTask(req: any, res: any) {
 }
 
 export async function listTasks(req: any, res: any) {
-  const userId = req.userId;
-  const { type } = req.query; // pending / accepted
+  // 1. 拿到分页参数（默认值：第 1 页，每页 10 条）
+  const page     = Number(req.query.page)     || 1;
+  const pageSize = Number(req.query.pageSize) || 10;
 
-  const tasks = await prisma.task.findMany({
-    where:
-      type === "accepted"
-        ? { receiverId: userId }
-        : type === "published"
-        ? { publisherId: userId }
-        : { status: TaskStatus.PENDING },
-    orderBy: { createdAt: "desc" },
+  // 2. 计算偏移
+  const skip = (page - 1) * pageSize;
+  const take = pageSize;
+
+  // 3. 并行查「总条数」和「当页数据」
+  const [total, rows] = await Promise.all([
+    prisma.task.count(),                       // 总条数
+    prisma.task.findMany({
+      skip,
+      take,
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
+
+  // 4. 返回前端需要的数据结构
+  res.json({
+    total,              // 总条数
+    list: rows,         // 当页数据
+    page,
+    pageSize,
+    hasMore: skip + rows.length < total, // 是否还有下一页
   });
-
-  res.json(tasks);
 }
 
 export async function taskDetail(req: any, res: any) {

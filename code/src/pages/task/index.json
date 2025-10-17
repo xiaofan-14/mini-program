@@ -4,5 +4,6 @@
     "custom-nav": "/components/custom-nav/index",
     "custom-tabbar": "/components/custom-tabbar/index",
     "task-list": "/components/task-list/index"
-  }
+  },
+  "enablePullDownRefresh": true
 }
