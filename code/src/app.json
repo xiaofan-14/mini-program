@@ -6,7 +6,8 @@
     "pages/profile/index",
     "pages/task/index",
     "pages/task-detail/index",
-    "pages/my-publish/index"
+    "pages/my-publish/index",
+    "pages/my-received/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

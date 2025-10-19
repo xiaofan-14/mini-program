@@ -16,7 +16,7 @@
         <text class="text-sm text-gray-500">欢迎来到校园跑腿平台</text>
       </view>
       <view wx:if="">
-      
+
       </view>
     </view>
 
@@ -38,27 +38,29 @@
 
     <!-- 菜单列表 -->
     <view class="mx-4 mt-4 rounded-xl bg-white/60 backdrop-blur-md shadow-md divide-y divide-gray-200">
-      <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="published">
-        <navigator url="/pages/my-publish/index" hover-class="none">
+      <navigator url="/pages/my-publish/index" hover-class="none">
+        <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="published">
           <view class="flex items-center gap-3">
             <image src="/assets/plus.png" class="w-5 h-5" />
             <text class="text-gray-800 text-base">我发布的任务</text>
           </view>
-        </navigator>
-        <view>
-          <image src="/assets/right.png" class="w-6 h-6" />
+          <view>
+            <image src="/assets/right.png" class="w-6 h-6" />
+          </view>
         </view>
-      </view>
+      </navigator>
 
-      <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="accepted">
-        <view class="flex items-center gap-3">
-          <image src="/assets/receive.png" class="w-5 h-5" />
-          <text class="text-gray-800 text-base">我领取的任务</text>
+      <navigator url="/pages/my-received/index" hover-class="none">
+        <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="accepted">
+          <view class="flex items-center gap-3">
+            <image src="/assets/receive.png" class="w-5 h-5" />
+            <text class="text-gray-800 text-base">我领取的任务</text>
+          </view>
+          <view>
+            <image src="/assets/right.png" class="w-6 h-6" />
+          </view>
         </view>
-        <view>
-          <image src="/assets/right.png" class="w-6 h-6" />
-        </view>
-      </view>
+      </navigator>
 
       <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToIncome">
         <view class="flex items-center gap-3">
