@@ -18,6 +18,9 @@ Page({
     this.setData({ navHeight: windowInfo.statusBarHeight + 44 });
     this.loadPage(1, true);
   },
+  async onShow(){
+    this.loadPage(1, true);
+  },
   // 下拉刷新
   async onPullDownRefresh() {
     await this.loadPage(1, true);

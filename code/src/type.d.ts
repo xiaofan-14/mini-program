@@ -35,6 +35,7 @@ export interface TaskType {
   receiverId: string | null,
   status: string,
   updatedAt: string,
+  x: number
 }
 
 export interface AddressType {

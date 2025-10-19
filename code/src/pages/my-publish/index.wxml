@@ -3,7 +3,7 @@
 <view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
   <!-- 任务列表 -->
   <scroll-view scroll-y style="padding-top: {{navHeight + 30}}px;">
-    <task-list tasks="{{ tasks }}" />
+    <task-list tasks="{{ tasks }}" from="publish" />
     <view wx:if="{{ tasks.length <= 0 }}" class="text-white text-xl text-center">
       暂时没有数据
     </view>

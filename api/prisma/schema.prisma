@@ -15,12 +15,12 @@ enum TaskStatus {
   CANCELLED
 }
 
-// 发布消耗、任务完成、提现
 enum TransactionType {
-  PUBLISH_CONSUME
-  TASK_COMPLETE
-  WITHDRAW
+  PUBLISH_CONSUME   // 发布任务扣款
+  REWARD_INCOME     // 领取任务完成后收入
+  REFUND            // 删除任务返还余额
 }
+
 
 // 进行中 / 已完成 / 已取消
 enum TransactionStatus {

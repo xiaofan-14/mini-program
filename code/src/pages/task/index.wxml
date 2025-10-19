@@ -2,7 +2,7 @@
 
 <view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
   <scroll-view scroll-y>
-    <task-list tasks="{{ tasks }}" />
+    <task-list tasks="{{ tasks }}" from="hall" />
     <view wx:if="{{ tasks.length <= 0 }}" class="text-white text-xl text-center">
       暂时没有数据
     </view>

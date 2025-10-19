@@ -1,4 +1,4 @@
-import { get, post } from "../utils/https";
+import { get, post, del } from "../utils/https";
 import type { TaskType } from 'src/type'
 
 // 登录
@@ -32,4 +32,16 @@ export async function getMyReceived(page: number, pageSize: number) {
 // 领取任务
 export async function receiveTask(data: { taskId: string }) {
   return post('task/receive-task', data)
+}
+// 完成任务
+export async function completeTask(data: { taskId: string }){
+  return post('task/complete-task', data)
+}
+// 删除任务
+export async function deleteTask(data: { taskId: string }){
+  return del('task/delete-task', data)
+}
+// 取消任务
+export async function cancelTask(data: { taskId: string }){
+  return post('task/cancel-task', data)
 }

@@ -32,7 +32,7 @@
       </view>
     </view>
     <!-- 联系方式卡片 -->
-    <view wx:if="{{ task.receiverId }}" class="glass-card relative overflow-hidden rounded-2xl px-6">
+    <view wx:if="{{ from !== 'hall' }}" class="glass-card relative overflow-hidden rounded-2xl px-6">
       <text class="text-lg font-semibold text-gray-800 mb-4 block">联系方式</text>
       <view class="mb-2 flex items-center justify-between">
         <text class="text-gray-700">电话</text>
@@ -54,8 +54,23 @@
 
     <!-- 接单按钮 -->
     <view class="fixed bottom-6 left-0 w-full px-4">
-      <button style="width: 100%;" class="border bg-[#9dd6c5] text-white font-semibold py-3 rounded-full shadow-md" bindtap="acceptTask">
+      <!-- 接单按钮 -->
+      <button wx:if="{{from === 'hall' && task.status !== 'COMPLETED' }}" style="width: 100%;" class="border bg-[#9dd6c5] text-white font-semibold py-3 rounded-full shadow-md" bindtap="acceptTask">
         接单
+      </button>
+
+      <!-- 完成任务按钮 -->
+      <view wx:elif="{{from === 'receive'}}" style="width: 100%;" class="flex gap-4">
+        <button wx:if="{{ task.status !== 'COMPLETED' }}" class="border bg-gray-500 text-white font-semibold py-3 rounded-full shadow-md" bindtap="cancelTask">
+          取消任务
+        </button>
+        <button wx:if="{{ task.status !== 'COMPLETED' }}" class="border bg-green-500 text-white font-semibold py-3 rounded-full shadow-md" bindtap="completeTask">
+          完成任务
+        </button>
+      </view>
+      <!-- 删除任务按钮 -->
+      <button wx:elif="{{from === 'publish'}}" style="width: 100%;" class="border bg-red-400 text-white font-semibold py-3 rounded-full shadow-md" bindtap="deleteTask">
+        删除任务
       </button>
     </view>
   </scroll-view>

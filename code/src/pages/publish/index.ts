@@ -154,9 +154,7 @@ Page({
       await createTask(reqData)
       wx.hideLoading()
       wx.showToast({ title: '发布成功', icon: 'success' })
-      setTimeout(() => {
-        wx.navigateTo({ url: '/pages/task/index' })
-      }, 1000)
+      wx.navigateBack()
     } catch (error: any) {
       wx.hideLoading()
       wx.showToast({ title: error?.message || '发布失败', icon: 'none' })

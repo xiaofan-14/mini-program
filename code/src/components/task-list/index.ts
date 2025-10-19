@@ -10,6 +10,10 @@ Component({
       type: Array,
       value: [] as TaskType[],
     },
+    from: {
+      type: String,
+      value: 'hall'
+    }
   },
   data: {
     list: [] as TaskType[],
@@ -36,7 +40,11 @@ Component({
   methods: {
     viewTaskDetail(e: any) {
       const id = e.target.dataset.id
-      wx.navigateTo({ url: `/pages/task-detail/index?id=${id}` })
+      const { from } = this.properties
+      wx.navigateTo({
+        url: `/pages/task-detail/index?id=${id}&from=${from}`,
+      })
     }
   },
 });
+// publish receive
