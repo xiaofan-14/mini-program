@@ -36,3 +36,20 @@ export interface TaskType {
   status: string,
   updatedAt: string,
 }
+
+export interface AddressType {
+  address: string,
+  name: string,
+  phone: string
+}
+
+export interface PakcageType {
+  type: string,
+  weight: string,
+  deliveryTime: string,
+  gender: string,
+  needBuilding: boolean,
+  notes: string,
+  price: number,
+  pickupCode: number
+}

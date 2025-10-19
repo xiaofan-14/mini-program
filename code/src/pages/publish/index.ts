@@ -1,31 +1,17 @@
-import type { TaskType } from 'src/type'
+import type { TaskType, AddressType,PakcageType } from 'src/type'
 import { calcDeadline } from 'src/utils/util'
 import { createTask } from 'src/api/api'  
+import { useCache } from 'src/hooks/useCache'
 
-interface PakcageType {
-  type: string,
-  weight: string,
-  deliveryTime: string,
-  gender: string,
-  needBuilding: boolean,
-  notes: string,
-  price: number,
-  pickupCode: number
-}
-
-interface Address {
-  address: string,
-  name: string,
-  phone: string
-}
+const { getCache } = useCache()
 
 Page({
   data: {
     popupAnimation: {},
     statusBarHeight: 40,
     navHeight: 64,
-    pickup: {} as Address,
-    delivery: {} as Address,
+    pickup: {} as AddressType,
+    delivery: {} as AddressType,
     showPackageModal: false,
     packageInfo: {} as PakcageType,
     packageText: "",
@@ -41,7 +27,7 @@ Page({
     this.setData({ statusBarHeight, navHeight });
   },
   onShow() {
-    const pickupData = wx.getStorageSync('pickupData');
+    const pickupData = getCache('pickupData') as AddressType
     if (pickupData) {
       this.setData({
         pickup: {
@@ -51,7 +37,7 @@ Page({
         }
       });
     }
-    const deliveryData = wx.getStorageSync('deliveryData');
+    const deliveryData = getCache('deliveryData') as AddressType
     if (deliveryData) {
       this.setData({
         delivery: {

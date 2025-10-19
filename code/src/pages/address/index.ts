@@ -1,3 +1,8 @@
+import { useCache } from 'src/hooks/useCache'
+import type { AddressType } from 'src/type'
+
+const { setCache, getCache } = useCache()
+
 Page({
   data: {
     type: 'pickup',
@@ -22,7 +27,15 @@ Page({
     const navHeight = statusBarHeight + 40;
 
     // 尝试加载已保存的数据
-    const savedData = wx.getStorageSync(`${type}Data`) || {};
+    const savedData = getCache(`${type}Data`) as AddressType;
+
+    if (savedData) {
+      this.setData({
+        address: savedData.address || '',
+        name: savedData.name || '',
+        phone: savedData.phone || ''
+      })
+    }
 
     this.setData({
       type,
@@ -30,9 +43,6 @@ Page({
       pageTitle,
       statusBarHeight,
       navHeight,
-      address: savedData.address || '',
-      name: savedData.name || '',
-      phone: savedData.phone || ''
     });
   },
 
@@ -44,7 +54,7 @@ Page({
   onSubmit() {
     const { type, address, name, phone } = this.data;
 
-    wx.setStorageSync(`${type}Data`, { address, name, phone });
+    setCache(`${type}Data`, { address, name, phone }, 86400);
 
     wx.showToast({ title: '保存成功', icon: 'success', duration: 1500 });
     wx.navigateBack();

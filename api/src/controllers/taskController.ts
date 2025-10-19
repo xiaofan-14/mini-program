@@ -143,7 +143,6 @@ export async function taskDetail(req: any, res: any) {
 
 export async function listMyPublishedTasks(req: any, res: any) {
   const userId = req.userId;
-  console.log(userId)
   if (!userId) return res.status(401).json({ error: '未登录' });
 
   const page = Number(req.query.page) || 1;

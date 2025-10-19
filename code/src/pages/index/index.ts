@@ -1,7 +1,7 @@
-// index.ts
-// 获取应用实例
-const app = getApp<IAppOption>()
-const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+import { useCache } from 'src/hooks/useCache'
+import type { AddressType } from 'src/type'
+
+const { getCache } = useCache()
 
 Page({
   data: {
@@ -31,23 +31,23 @@ Page({
   },
 
   onShow() {
-    const pickupData = wx.getStorageSync('pickupData');
+    const pickupData = getCache('pickupData') as AddressType
     if (pickupData) {
       this.setData({
         pickup: {
-          address: pickupData.address,
-          name: pickupData.name,
-          phone: pickupData.phone
+          address: pickupData.address || '',
+          name: pickupData.name || '',
+          phone: pickupData.phone || ''
         }
       });
     }
-    const deliveryData = wx.getStorageSync('deliveryData');
+    const deliveryData = getCache('deliveryData') as AddressType
     if (deliveryData) {
       this.setData({
         delivery: {
-          address: deliveryData.address,
-          name: deliveryData.name,
-          phone: deliveryData.phone
+          address: deliveryData.address || '',
+          name: deliveryData.name || '',
+          phone: deliveryData.phone || ''
         }
       });
     }
@@ -62,4 +62,3 @@ Page({
     wx.navigateTo({ url: "/pages/publish/index" })
   }
 })
-
