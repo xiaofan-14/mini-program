@@ -44,19 +44,6 @@ Page({
     }
   },
 
-  goToTasks(e: any) {
-    const type = e.currentTarget.dataset.type
-    wx.navigateTo({ url: `/pages/tasks/index?type=${type}` })
-  },
-
-  goToIncome() {
-    wx.navigateTo({ url: '/pages/income/index' })
-  },
-
-  goToSettings() {
-    wx.navigateTo({ url: '/pages/settings/index' })
-  },
-
   async onNickNameInput(e: any) {
     const nickName = e.detail.value
     const temp = this.data.userInfo

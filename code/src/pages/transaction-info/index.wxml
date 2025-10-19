@@ -1,0 +1,82 @@
+<!-- <custom-nav title="收益详情" showBack="{{true}}" /> -->
+
+<view class="custom-nav fixed top-0 left-0 w-full z-50 backdrop-blur-md shadow-sm bg-white/30 overflow-hidden pb-2">
+  <!-- 状态栏占位 -->
+  <view class="w-full" style="height: {{statusBarHeight}}px;"></view>
+
+  <!-- 导航内容 -->
+  <view class="flex items-center justify-between px-4 py-2">
+    <!-- 返回按钮 -->
+    <view bindtap="onBack" class="flex items-center">
+      <image src="/assets/back.png" class="w-6 h-6" />
+    </view>
+    <text class="text-black text-lg text-center font-bold flex-1">收益详情</text>
+
+    <!-- 占位保持左右对齐 -->
+    <view class="w-4"></view>
+  </view>
+</view>
+
+<!-- 导航栏底部发光条 -->
+<view class="nav-glow fixed top-0 left-0 w-full h-10 z-40" style="margin-top: {{navHeight - 60}}px; background: linear-gradient(to right, #3dee95, #9ef3ce, #71f8a5);filter: blur(40px); opacity: 1;">
+</view>
+
+
+<view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5] px-4 pt-4">
+  <!-- 毛玻璃卡片 -->
+  <view class="bg-white/50 backdrop-blur-md rounded-2xl p-4 shadow-md border border-white/30">
+    <!-- 收入类型 & 金额 -->
+    <view class="flex justify-between items-center mb-2">
+      <text wx:if="{{transaction.type === 'PUBLISH_CONSUME'}}" class="text-lg font-semibold text-purple-600">发布任务扣款</text>
+      <text wx:if="{{transaction.type === 'REWARD_INCOME'}}" class="text-lg font-semibold text-purple-600">领取任务完成后收入</text>
+      <text wx:if="{{transaction.type === 'REFUND'}}" class="text-lg font-semibold text-purple-600">删除任务返还余额</text>
+      <text class="text-xl font-bold text-green-500">¥{{transaction.amount}}</text>
+    </view>
+
+    <!-- 交易状态 -->
+    <view class="flex justify-between items-center mb-2">
+      <text wx:if="{{transaction.status === 'PENDING'}}" class="text-gray-700 text-sm">状态：进行中</text>
+      <text wx:if="{{transaction.status === 'COMPLETED'}}" class="text-gray-700 text-sm">状态：已完成</text>
+      <text wx:if="{{transaction.status === 'CANCELLED'}}" class="text-gray-700 text-sm">状态：已取消</text>
+      <text class="text-gray-500 text-sm">{{formatTime(transaction.createdAt)}}</text>
+    </view>
+
+    <!-- 关联任务信息 -->
+    <text class="text-xl text-gray-700 font-medium mb-1 block">关联任务</text>
+    <view class="mt-2">
+      <view class="mb-1">
+        <text class="text-gray-600">标题：{{transaction.task.title}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">类型：{{transaction.task.type}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">报酬：¥{{transaction.task.reward}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">送达时间：{{formatTime(transaction.task.deadline)}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">重量：{{transaction.task.weight}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">性别要求：{{transaction.task.genderRequirement || '不限'}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">是否需要进楼：{{transaction.task.needBuilding ? '是' : '否'}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">取件地址：{{transaction.task.pickupAddress}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">送达地址：{{transaction.task.deliveryAddress}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">联系电话：{{transaction.task.contactPhone}}</text>
+      </view>
+      <view class="mb-1">
+        <text class="text-gray-600">描述：{{transaction.task.description || '无'}}</text>
+      </view>
+    </view>
+  </view>
+</view>

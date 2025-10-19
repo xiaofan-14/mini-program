@@ -146,7 +146,6 @@ export async function deleteTask(req: any, res: any) {
 
   if (!userId) return res.status(401).json({ error: "未登录" });
   if (!taskId) return res.status(400).json({ error: "缺少任务ID" });
-  console.log(taskId);
   try {
     const task = await prisma.task.findUnique({ where: { id: taskId } });
     if (!task) return res.status(404).json({ error: "任务不存在" });

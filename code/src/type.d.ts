@@ -54,3 +54,51 @@ export interface PakcageType {
   price: number,
   pickupCode: number
 }
+
+export interface TransactionType {
+  amount: number
+  createdAt: string
+  id: string
+  status: string
+  task: {
+    contactPhone: string
+    createdAt: string
+    deadline: string
+    deliveryAddress: string
+    deliveryTime: string
+    description: string
+    genderRequirement: string
+    id: string
+    needBuilding: boolean;
+    pickupAddress: string
+    pickupCode: string
+    publisherId: string
+    receiverId: null | string
+    reward: number
+    status: string
+    title: string
+    type: string
+    updatedAt: string
+    weight: string
+  };
+  taskId: string
+  type: string
+  user: {
+    avatarUrl: string
+    balance: number
+    city: null | string
+    country: null | string
+    createdAt: string
+    gender: null | number
+    id: string
+    nickName: string
+    openid: string
+    pendingIncome: 0;
+    province: null;
+    totalIncome: 0;
+    unionid: null;
+    updatedAt: string
+    withdrawn: 0;
+  };
+  userId: string
+}

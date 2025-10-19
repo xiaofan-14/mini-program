@@ -1,0 +1,29 @@
+<custom-nav title="收益记录" showBack="{{true}}"></custom-nav>
+
+<view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5] px-4 pt-4">
+  <!-- 收益列表 -->
+  <scroll-view scroll-y class="pb-10">
+    <view wx:for="{{transactions}}" wx:key="id" class="mb-4">
+      <!-- 毛玻璃卡片 -->
+      <view bindtap="toDetail" class="relative overflow-hidden rounded-2xl p-4 bg-white/50 backdrop-blur-md border border-white/30 shadow-md" data-id="{{item.id}}">
+        <view class="flex justify-between items-center mb-2">
+          <text wx:if="{{item.type === 'PUBLISH_CONSUME'}}" class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-300">发布任务扣款</text>
+          <text wx:if="{{item.type === 'REWARD_INCOME'}}" class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-300">领取任务完成后收入</text>
+          <text wx:if="{{item.type === 'REFUND'}}" class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-300">删除任务返还余额</text>
+          <text class="text-lg font-semibold text-purple-600">¥{{item.amount}}</text>
+        </view>
+
+        <view class="flex justify-between items-center mb-1">
+          <text wx:if="{{item.status === 'PENDING'}}" class="text-gray-700 text-sm">状态：进行中</text>
+          <text wx:if="{{item.status === 'COMPLETED'}}" class="text-gray-700 text-sm">状态：已完成</text>
+          <text wx:if="{{item.status === 'CANCELLED'}}" class="text-gray-700 text-sm">状态：已取消</text>
+          <text class="text-gray-500 text-xs">{{formatDate(item.createdAt)}}</text>
+        </view>
+
+        <view wx:if="{{item.taskTitle}}" class="text-gray-700 text-sm mt-1">
+          <text>关联任务：{{item.taskTitle}}</text>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+</view>

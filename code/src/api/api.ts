@@ -45,3 +45,11 @@ export async function deleteTask(data: { taskId: string }){
 export async function cancelTask(data: { taskId: string }){
   return post('task/cancel-task', data)
 }
+// 获取收益列表
+export async function getTransactions(){
+  return get('transaction')
+}
+// 获取收益详情
+export async function getTransactionDetail(id: string){
+  return get(`transaction/detail?id=${id}`)
+}
