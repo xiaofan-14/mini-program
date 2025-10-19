@@ -1,7 +1,7 @@
 import { signin } from '../../api/api'
 import { useCache } from '../../hooks/useCache'
 
-const { setCache, getCache } = useCache();
+const { setCache, getCache, remove } = useCache();
 
 Page({
   data: {
@@ -64,7 +64,6 @@ Page({
     this.setData({
       userInfo: temp,
     });
-    await this.handleLogin()
   },
 
   async onChooseAvatar(e: any) {
@@ -72,7 +71,6 @@ Page({
     const temp = this.data.userInfo
     temp.avatarUrl = avatarUrl
     this.setData({ userInfo: temp });
-    await this.handleLogin()
   },
 
   async handleLogin() {
@@ -89,6 +87,7 @@ Page({
 
       setCache('token', token, 86400);
       setCache('user', user, 86400);
+      this.setData({ isLogin: true })
 
       wx.showToast({ title: '登录成功', icon: 'success' });
     } catch (err) {
@@ -96,4 +95,11 @@ Page({
       wx.showToast({ title: '登录失败', icon: 'error' });
     }
   },
+  onLogout(){    
+    remove('token');
+    remove('user');
+    this.setData({ isLogin: false })
+    this.setData({ userInfo: {} as WechatMiniprogram.UserInfo })
+    wx.showToast({ title: '退出成功', icon: 'success' });
+  }
 })

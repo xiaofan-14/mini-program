@@ -2,7 +2,7 @@
 
 <view class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#ffffff]">
   <scroll-view scroll-y class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]" style="padding-top: {{navHeight + 20}}px;">
-    <view class="mx-4 mt-2 rounded-xl bg-white/40 backdrop-blur-md p-4 shadow-md flex items-center gap-4">
+    <view class="mx-4 mt-2 rounded-xl bg-white/40 backdrop-blur-md p-4 shadow-md flex items-center justify-between gap-4">
       <view class="flex justify-center items-center">
         <button wx:if="{{!userInfo.avatarUrl}}" style="width: 128rpx; padding: 0;" class="avatar-wrapper h-16 bg-transparent" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
           <image class="avatar w-16 h-16 rounded-full shadow" src="/assets/avatar.png" />
@@ -10,13 +10,14 @@
         <!-- 已设置头像：仅展示 -->
         <image wx:else class="avatar w-16 h-16 rounded-full shadow" src="{{userInfo.avatarUrl}}" />
       </view>
-      <view class="flex flex-col gap-2">
+      <view class="flex flex-col gap-2 max-w-[50%]">
         <input wx:if="{{!userInfo.nickName}}" type="nickname" class="text-lg font-semibold text-gray-900 bg-transparent outline-none" placeholder="点击输入昵称" bindinput="onNickNameInput" />
         <input wx:else type="nickname" class="text-lg font-semibold text-gray-900 bg-transparent outline-none" disabled bindinput="onNickNameInput" value="{{userInfo.nickName}}" />
         <text class="text-sm text-gray-500">欢迎来到校园跑腿平台</text>
       </view>
-      <view wx:if="">
-
+      <view class="ml-auto">
+        <text wx:if="{{isLogin}}" bindtap="onLogout" class="border border-gray-300 text-gray-500 px-2 py-1 rounded-md">退出</text>
+        <text wx:else bindtap="handleLogin" class="border border-gray-300 text-gray-500 px-2 py-1 rounded-md">登录</text>
       </view>
     </view>
 
