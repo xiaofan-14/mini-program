@@ -5,7 +5,7 @@
   <scroll-view scroll-y class="pb-10">
     <view wx:for="{{transactions}}" wx:key="id" class="mb-4">
       <!-- 毛玻璃卡片 -->
-      <view bindtap="toDetail" class="relative overflow-hidden rounded-2xl p-4 bg-white/50 backdrop-blur-md border border-white/30 shadow-md" data-id="{{item.id}}">
+      <view class="relative overflow-hidden rounded-2xl p-4 bg-white/50 backdrop-blur-md border border-white/30 shadow-md">
         <view class="flex justify-between items-center mb-2">
           <text wx:if="{{item.type === 'PUBLISH_CONSUME'}}" class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-300">发布任务扣款</text>
           <text wx:if="{{item.type === 'REWARD_INCOME'}}" class="text-sm font-medium px-2 py-1 rounded-md text-white bg-green-300">领取任务完成后收入</text>

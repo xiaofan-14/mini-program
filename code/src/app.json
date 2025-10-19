@@ -9,7 +9,6 @@
     "pages/my-publish/index",
     "pages/my-received/index",
     "pages/income-detail/index",
-    "pages/transaction-info/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

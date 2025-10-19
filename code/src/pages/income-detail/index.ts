@@ -30,9 +30,4 @@ Page({
       wx.showToast({ title: '获取收益失败', icon: 'none' });
     }
   },
-  toDetail(e: any) {
-    const id = e.currentTarget.dataset.id;
-    wx.navigateTo({ url: `/pages/transaction-info/index?id=${id}` });
-  }
-  
 });
