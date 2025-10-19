@@ -10,7 +10,7 @@ export async function signin(code: string, userInfo: WechatMiniprogram.UserInfo)
   });
 }
 // 发布任务
-export async function createTask(data: TaskType){
+export async function createTask(data: TaskType) {
   return await post('task/publish', data)
 }
 // 获取任务列表 
@@ -20,4 +20,12 @@ export async function getTaskList(page: number, pageSize: number) {
 // 获取任务详情
 export async function getTaskDetail(id: string) {
   return await get(`task/task-detail?id=${id}`)
+}
+// 获取我发布的列表
+export async function getMyPublish(page: number, pageSize: number) {
+  return await get(`task/my-publish?page=${page}&pageSize=${pageSize}`)
+}
+// 获取我领取的任务列表
+export async function getMyReceived(page: number, pageSize: number) {
+  return await get(`task/my-received?page=${page}&pageSize=${pageSize}`)
 }

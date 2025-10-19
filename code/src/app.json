@@ -5,7 +5,8 @@
     "pages/publish/index",
     "pages/profile/index",
     "pages/task/index",
-    "pages/task-detail/index"
+    "pages/task-detail/index",
+    "pages/my-publish/index"
   ],
   "window": {
     "navigationBarTextStyle": "black",

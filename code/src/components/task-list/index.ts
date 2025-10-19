@@ -38,5 +38,5 @@ Component({
       const id = e.target.dataset.id
       wx.navigateTo({ url: `/pages/task-detail/index?id=${id}` })
     }
-  }
+  },
 });

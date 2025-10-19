@@ -16,6 +16,7 @@ Page({
     },
     statusBarHeight: 40,
     navHeight: 64,
+    isLogin: false
   },
 
   onLoad() {
@@ -23,10 +24,23 @@ Page({
     const statusBarHeight = windowInfo.statusBarHeight;
     const navHeight = statusBarHeight + 44;
     this.setData({ statusBarHeight, navHeight });
+
+    const token = getCache('token');
     const cachedUser = getCache('user') as WechatMiniprogram.UserInfo
 
-    if (cachedUser) {
-      this.setData({ userInfo: cachedUser })
+    if (token && cachedUser) {
+      // token 有效，说明登录状态还在
+      this.setData({
+        isLogin: true,
+        userInfo: cachedUser,
+      });
+    } else {
+      // token 过期或不存在
+      wx.showToast({
+        title: '登录已过期，请重新登录',
+        icon: 'none',
+      });
+      this.setData({ isLogin: false });
     }
   },
 
@@ -74,7 +88,7 @@ Page({
       const { token, user } = await signin(loginRes.code, this.data.userInfo);
 
       setCache('token', token, 86400);
-      setCache('user', user);
+      setCache('user', user, 86400);
 
       wx.showToast({ title: '登录成功', icon: 'success' });
     } catch (err) {

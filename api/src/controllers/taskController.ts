@@ -140,3 +140,44 @@ export async function taskDetail(req: any, res: any) {
 
   res.json(tasks);
 }
+
+export async function listMyPublishedTasks(req: any, res: any) {
+  const userId = req.userId;
+  console.log(userId)
+  if (!userId) return res.status(401).json({ error: '未登录' });
+
+  const page = Number(req.query.page) || 1;
+  const pageSize = Number(req.query.pageSize) || 10;
+
+  const result = await paginateTasks({ publisherId: userId }, page, pageSize);
+  res.json(result);
+}
+
+export async function listMyReceivedTasks(req: any, res: any) {
+  const userId = req.userId;
+  if (!userId) return res.status(401).json({ error: '未登录' });
+
+  const page = Number(req.query.page) || 1;
+  const pageSize = Number(req.query.pageSize) || 10;
+
+  const result = await paginateTasks({ receiverId: userId }, page, pageSize);
+
+  res.json(result);
+}
+
+async function paginateTasks(where: any, page = 1, pageSize = 10) {
+  const skip = (page - 1) * pageSize;
+  const take = pageSize;
+
+  const [total, rows] = await Promise.all([
+    prisma.task.count({ where }),
+    prisma.task.findMany({
+      where,
+      skip,
+      take,
+      orderBy: { createdAt: 'desc' },
+    }),
+  ]);
+
+  return { total, list: rows, page, pageSize, hasMore: skip + rows.length < total };
+}

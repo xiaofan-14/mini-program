@@ -45,9 +45,5 @@ Page({
     });
     wx.hideLoading();
   },
-  viewTaskDetail(e: any) {
-    const id = e.currentTarget.dataset.id;
-    wx.navigateTo({ url: `/pages/task-detail/index?id=${id}` });
-  },
 });
 

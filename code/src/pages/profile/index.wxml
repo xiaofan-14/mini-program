@@ -11,8 +11,12 @@
         <image wx:else class="avatar w-16 h-16 rounded-full shadow" src="{{userInfo.avatarUrl}}" />
       </view>
       <view class="flex flex-col gap-2">
-        <input type="nickname" class="text-lg font-semibold text-gray-900 bg-transparent outline-none" placeholder="点击输入昵称" disabled="{{userInfo.nickName.length >= 0}}" bindinput="onNickNameInput" value="{{userInfo.nickName}}" />
+        <input wx:if="{{!userInfo.nickName}}" type="nickname" class="text-lg font-semibold text-gray-900 bg-transparent outline-none" placeholder="点击输入昵称" bindinput="onNickNameInput" />
+        <input wx:else type="nickname" class="text-lg font-semibold text-gray-900 bg-transparent outline-none" disabled bindinput="onNickNameInput" value="{{userInfo.nickName}}" />
         <text class="text-sm text-gray-500">欢迎来到校园跑腿平台</text>
+      </view>
+      <view wx:if="">
+      
       </view>
     </view>
 
@@ -35,10 +39,12 @@
     <!-- 菜单列表 -->
     <view class="mx-4 mt-4 rounded-xl bg-white/60 backdrop-blur-md shadow-md divide-y divide-gray-200">
       <view class="flex items-center justify-between px-6 py-4 active:bg-white/40" bindtap="goToTasks" data-type="published">
-        <view class="flex items-center gap-3">
-          <image src="/assets/plus.png" class="w-5 h-5" />
-          <text class="text-gray-800 text-base">我发布的任务</text>
-        </view>
+        <navigator url="/pages/my-publish/index" hover-class="none">
+          <view class="flex items-center gap-3">
+            <image src="/assets/plus.png" class="w-5 h-5" />
+            <text class="text-gray-800 text-base">我发布的任务</text>
+          </view>
+        </navigator>
         <view>
           <image src="/assets/right.png" class="w-6 h-6" />
         </view>
