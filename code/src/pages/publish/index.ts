@@ -134,7 +134,7 @@ Page({
         return wx.showToast({ title: '请填写任务赏金', icon: 'none' })
       }
       const deadline = calcDeadline(packageInfo.deliveryTime)
-      const title = `${packageInfo.type || '任务'}（${pickup.address?.slice(0, 6)} to ${delivery.address?.slice(0, 6)}）`
+      const title = `${packageInfo.type || '任务'}`
       const reqData = {
         title,
         type: packageInfo.type || '其他',

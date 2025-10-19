@@ -1,7 +1,7 @@
 import { useCache } from '../hooks/useCache'
 
 const { getCache }  = useCache();
-const BASE_URL = 'http://localhost:3000/api/';
+const BASE_URL = 'http://192.168.249.220:3000/api/';
 
 // 获取本地 token
 function getToken() {
@@ -32,7 +32,7 @@ function http<T = any>(
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve(res.data as T);
         } else {
-          const msg = (res.data as any)?.error || `错误 ${res.statusCode}`;
+          const msg = `错误 ${res.statusCode}`;
           wx.showToast({ title: msg, icon: 'error' });
           reject(res.data);
         }

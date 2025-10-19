@@ -63,5 +63,6 @@ export function getStatus(key: string): string {
     ["CANCELLED","已取消"],
   ]);
 
-  return cache.get(key) ?? "已完成";
+  const res = cache.get(key);
+  return res == null ? "已完成" : res;
 }

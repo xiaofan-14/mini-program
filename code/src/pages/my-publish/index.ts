@@ -25,7 +25,10 @@ Page({
   },
   // 上拉加载更多
   async onReachBottom() {
-    if (!this.data.hasMore) return;
+    if (!this.data.hasMore) {
+      wx.showToast({ title:'没有更多数据了', icon: "error" })
+      return
+    };
     await this.loadPage(this.data.page + 1, false);
   },
   // 统一分页请求

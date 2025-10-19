@@ -4,5 +4,8 @@
   <!-- 任务列表 -->
   <scroll-view scroll-y style="padding-top: {{navHeight + 30}}px;">
     <task-list tasks="{{ tasks }}" />
+    <view wx:if="{{ tasks.length <= 0 }}" class="text-white text-xl text-center">
+      暂时没有数据
+    </view>
   </scroll-view>
 </view>

@@ -1,8 +1,49 @@
 <custom-nav title="任务列表" showBack="{{false}}"></custom-nav>
 
 <view style="padding-top: {{navHeight + 30}}px;" class="min-h-screen bg-gradient-to-b from-[#efefaf] to-[#9dd6c5]">
-  <!-- 任务列表 -->
-  <task-list tasks="{{ tasks }}" />
+  <scroll-view scroll-y>
+    <task-list tasks="{{ tasks }}" />
+    <view wx:if="{{ tasks.length <= 0 }}" class="text-white text-xl text-center">
+      暂时没有数据
+    </view>
+    <view style="visibility: hidden;">
+      <!-- 任务类型和报酬 -->
+      <view class="flex justify-between items-center mb-2">
+        <text class="text-md font-medium px-2 py-1 rounded-md text-white bg-[#9dd6c5]">
+        </text>
+        <text class="text-lg font-semibold text-purple-600"></text>
+      </view>
+      <!-- 地址 -->
+      <view class="flex justify-between">
+        <text>送达时间</text>
+        <text></text>
+      </view>
+      <view class="mb-1 flex justify-between">
+        <text class="text-gray-700 text-sm">从：</text>
+        <text class="text-gray-700 text-sm"></text>
+      </view>
+      <view class="mb-2 flex justify-between">
+        <text class="text-gray-700 text-sm">到：</text>
+        <text class="text-gray-700 text-sm"></text>
+      </view>
+      <!-- 额外信息 -->
+      <view class="mb-1 flex justify-between">
+        <view>
+          <text class="text-gray-500 text-sm">备注：</text>
+        </view>
+        <view class="flex flex-wrap gap-2 text-xs text-gray-500 mb-2">
+
+        </view>
+      </view>
+      <!-- 任务状态 -->
+      <view class="flex justify-between items-center">
+        <text class="text-sm text-gray-400"></text>
+        <view class="text-white text-md w-fit px-4 py-1 rounded-full shadow-md bg-[#afcfef]" bindtap="viewTaskDetail">
+          查看
+        </view>
+      </view>
+    </view>
+  </scroll-view>
 </view>
 
 <custom-tabbar active="task" />
