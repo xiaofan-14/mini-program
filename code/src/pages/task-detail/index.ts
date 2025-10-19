@@ -1,4 +1,4 @@
-import { getTaskDetail } from 'src/api/api'
+import { getTaskDetail, receiveTask } from 'src/api/api'
 import { cleanAddress } from 'src/utils/util'
 
 Page({
@@ -75,8 +75,12 @@ Page({
     }
   },
 
-  acceptTask() {
-    wx.showToast({ title: '已接单', icon: 'success' })
-    // TODO: 调用 API 接单
+  async acceptTask() {
+    try {
+      await receiveTask({ taskId: this.data.task.id })
+      wx.showToast({ title: '已接单', icon: 'success' })
+    } catch (e) {
+      wx.showToast({ title: e, icon: 'success' })
+    }
   }
 })

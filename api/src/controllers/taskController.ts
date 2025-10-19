@@ -180,3 +180,109 @@ async function paginateTasks(where: any, page = 1, pageSize = 10) {
 
   return { total, list: rows, page, pageSize, hasMore: skip + rows.length < total };
 }
+
+export async function receiveTask(req: any, res: any) {
+  const userId = req.userId; // 当前登录用户
+  const { taskId } = req.body;
+
+  if (!userId) return res.status(401).json({ error: '未登录' });
+  if (!taskId) return res.status(400).json({ error: '缺少任务ID' });
+
+  try {
+    const task = await prisma.task.findUnique({ where: { id: taskId } });
+    if (!task) return res.status(404).json({ error: '任务不存在' });
+
+    // 不能领取自己发布的任务
+    if (task.publisherId === userId) {
+      return res.status(400).json({ error: '不能领取自己发布的任务' });
+    }
+
+    // 已被他人领取
+    if (task.receiverId) {
+      return res.status(400).json({ error: '该任务已被领取' });
+    }
+
+    // 更新任务状态与领取人
+    const updated = await prisma.task.update({
+      where: { id: taskId },
+      data: {
+        receiverId: userId,
+        status: 'ACCEPTED', // 进行中
+      },
+    });
+
+    res.json({ message: '领取成功', task: updated });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: '领取失败' });
+  }
+}
+
+export async function completeTask(req: any, res: any) {
+  const userId = req.userId;
+  const { taskId } = req.body;
+
+  if (!userId) return res.status(401).json({ error: '未登录' });
+  if (!taskId) return res.status(400).json({ error: '缺少任务ID' });
+
+  try {
+    const task = await prisma.task.findUnique({ where: { id: taskId } });
+    if (!task) return res.status(404).json({ error: '任务不存在' });
+
+    if (task.receiverId !== userId) {
+      return res.status(403).json({ error: '无权限完成此任务' });
+    }
+
+    const updated = await prisma.task.update({
+      where: { id: taskId },
+      data: { status: 'COMPLETED' },
+    });
+
+    res.json({ message: '任务已完成', task: updated });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: '完成任务失败' });
+  }
+}
+
+export async function cancelTask(req: any, res: any) {
+  const userId = req.userId;
+  const { taskId } = req.body;
+
+  if (!userId) return res.status(401).json({ error: '未登录' });
+  if (!taskId) return res.status(400).json({ error: '缺少任务ID' });
+
+  try {
+    const task = await prisma.task.findUnique({ where: { id: taskId } });
+    if (!task) return res.status(404).json({ error: '任务不存在' });
+
+    // 领取者取消
+    if (task.receiverId === userId) {
+      const updated = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          receiverId: null,
+          status: 'PENDING', // 回到待领取状态
+        },
+      });
+      return res.json({ message: '已取消领取', task: updated });
+    }
+
+    // 发布者取消
+    if (task.publisherId === userId) {
+      const updated = await prisma.task.update({
+        where: { id: taskId },
+        data: {
+          status: 'CANCELLED',
+        },
+      });
+      return res.json({ message: '任务已取消', task: updated });
+    }
+
+    res.status(403).json({ error: '无权限取消此任务' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: '取消任务失败' });
+  }
+}
+

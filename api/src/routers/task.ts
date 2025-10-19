@@ -6,6 +6,9 @@ import {
   taskDetail,
   listMyPublishedTasks,
   listMyReceivedTasks,
+  receiveTask,
+  completeTask,
+  cancelTask,
 } from "../controllers/taskController";
 import { authMiddleware } from "../middleware/authMiddleware";
 
@@ -17,5 +20,8 @@ router.get("/list", listTasks);
 router.get("/task-detail", taskDetail);
 router.get("/my-publish", authMiddleware, listMyPublishedTasks);
 router.get("/my-received", authMiddleware, listMyReceivedTasks);
+router.post("/receive-task", authMiddleware, receiveTask);
+router.post("/complete-task", authMiddleware, completeTask);
+router.post("/cancel-task", authMiddleware, cancelTask);
 
 export default router;

@@ -29,3 +29,7 @@ export async function getMyPublish(page: number, pageSize: number) {
 export async function getMyReceived(page: number, pageSize: number) {
   return await get(`task/my-received?page=${page}&pageSize=${pageSize}`)
 }
+// 领取任务
+export async function receiveTask(data: { taskId: string }) {
+  return post('task/receive-task', data)
+}

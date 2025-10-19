@@ -32,8 +32,12 @@ function http<T = any>(
         if (res.statusCode >= 200 && res.statusCode < 300) {
           resolve(res.data as T);
         } else {
-          const msg = `错误 ${res.statusCode}`;
-          wx.showToast({ title: msg, icon: 'error' });
+          const message = (res.data as { error: unknown } ).error
+          wx.showModal({
+            title: '提示',
+            content: message as string,
+            showCancel: false,
+          });
           reject(res.data);
         }
       },
