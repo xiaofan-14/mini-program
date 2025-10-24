@@ -16,11 +16,12 @@ enum TaskStatus {
 }
 
 enum TransactionType {
-  PUBLISH_CONSUME   // 发布任务扣款
-  REWARD_INCOME     // 领取任务完成后收入
-  REFUND            // 删除任务返还余额
+  PUBLISH_CONSUME   // 发布任务时消费
+  REWARD_INCOME     // 接单奖励
+  REFUND            // 任务退款
+  RECHARGE          // 用户充值
+  WITHDRAW          // 用户提现
 }
-
 
 // 进行中 / 已完成 / 已取消
 enum TransactionStatus {

@@ -47,6 +47,18 @@
         </view>
       </navigator>
 
+      <navigator url="/pages/balance/index" hover-class="none">
+        <view class="flex items-center justify-between px-6 py-4 active:bg-white/40">
+          <view class="flex items-center gap-3">
+            <image src="/assets/wallet.png" class="w-5 h-5" />
+            <text class="text-gray-800 text-base">我的余额</text>
+          </view>
+          <view>
+            <image src="/assets/right.png" class="w-6 h-6" />
+          </view>
+        </view>
+      </navigator>
+
       <navigator url="/pages/income-detail/index" hover-class="none">
         <view class="flex items-center justify-between px-6 py-4 active:bg-white/40">
           <view class="flex items-center gap-3">

@@ -1,0 +1,40 @@
+<custom-nav title="我的余额" showBack="{{true}}" />
+
+<view style="padding-top: {{navHeight + 40}}px;" class="p-4 space-y-4">
+  <!-- 毛玻璃余额卡片 -->
+  <view class="rounded-2xl bg-white/40 backdrop-blur-md p-6 shadow-md text-center">
+    <text class="text-gray-700 text-lg">当前余额（元）</text>
+    <view class="text-4xl font-bold text-gray-900 my-3">￥{{ balance }}</view>
+
+    <view class="flex justify-center gap-6 mt-4">
+      <button class="px-6 py-2 bg-blue-500/80 text-white rounded-xl shadow hover:bg-blue-600 active:scale-95" bindtap="openRecharge">
+        充值
+      </button>
+      <button class="px-6 py-2 bg-emerald-500/80 text-white rounded-xl shadow hover:bg-emerald-600 active:scale-95" bindtap="openWithdraw">
+        提现
+      </button>
+    </view>
+  </view>
+</view>
+
+<!-- 毛玻璃弹窗 -->
+<view wx:if="{{ showModal }}" class="fixed inset-0 flex justify-center items-center bg-black/30 z-50">
+  <view class="w-80 bg-white/50 backdrop-blur-md rounded-2xl p-6 shadow-lg">
+    <view class="text-center mb-4 text-gray-800 font-semibold text-lg">
+      {{ modalType === 'recharge' ? '充值金额' : '提现金额' }}
+    </view>
+
+    <view class="flex items-center justify-center mb-6">
+      <text class="text-2xl mr-2 text-gray-700">￥</text>
+      <input type="number" focus class="text-2xl text-center bg-transparent border-b border-gray-300 w-32 outline-none"
+             placeholder="0.00" value="{{ inputAmount }}" bindinput="onAmountInput" />
+    </view>
+
+    <view class="flex gap-4">
+      <button class="px-4 py-2 text-gray-600 bg-gray-200/60 rounded-xl hover:bg-gray-300"
+              bindtap="closeModal">取消</button>
+      <button class="px-4 py-2 text-white bg-blue-500/80 rounded-xl hover:bg-blue-600"
+              bindtap="confirmAction">确定</button>
+    </view>
+  </view>
+</view>

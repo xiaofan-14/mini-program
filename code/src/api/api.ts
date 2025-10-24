@@ -53,3 +53,18 @@ export async function getTransactions(){
 export async function getTransactionDetail(id: string){
   return get(`transaction/detail?id=${id}`)
 }
+
+// 充值
+export async function recharge(amount: number) {
+  return await post("transaction/recharge", { amount });
+}
+
+// 提现
+export async function withdraw(amount: number) {
+  return await post("transaction/withdraw", { amount });
+}
+
+// 获取用户信息
+export async function profile() {
+  return await get('auth/profile')
+}

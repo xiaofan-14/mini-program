@@ -42,6 +42,7 @@ Page({
       });
       this.setData({ isLogin: false });
     }
+    console.log(cachedUser)
   },
 
   async onNickNameInput(e: any) {

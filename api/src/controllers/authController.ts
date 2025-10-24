@@ -40,3 +40,15 @@ export async function login(req: any, res: any) {
     res.status(500).json({ error: '服务器错误' });
   }
 }
+
+export async function getProfile(req: any, res: any) {
+  try {
+    const userId = req.userId;
+    const user = await prisma.user.findUnique({ where: { id: userId } });
+    if (!user) return res.status(404).json({ error: '用户未找到' });
+    res.json({ user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: '服务器错误' });
+  }
+}
